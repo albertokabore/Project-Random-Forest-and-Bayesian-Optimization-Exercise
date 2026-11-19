@@ -25,7 +25,7 @@ The numbered line containing only "diagnoses" completes the validation sentence;
 | Albert Kabore, PhD student in Artificial Intelligence | Present in report, Word file and notebook author details. |
 | Introduction and natural academic prose | Present; unsupported clinical and causal claims are avoided. |
 | Observations after each step | Six blocks, each exactly 50 words across two bullets, before the next step begins. |
-| Final insights, recommendations and conclusion last | Present in all submission documents; conclusion is the final report/notebook section. |
+| Final insights, recommendations and conclusion last | Present; the conclusion is the final body section. Under the latest instruction, References follows the conclusion in the report and notebook. |
 | Remove screenshot paragraph | Removed from notebook Step 1; its title remains. |
 | Markdown subtitles for every notebook visualization | All nine saved figures are labelled; the paired comparison figures share a caption cell with two explicit subtitles. |
 | Remove watermarks | The academic Word edition contains no watermark objects. Chart titles and page numbers are retained. |
@@ -46,12 +46,12 @@ The numbered line containing only "diagnoses" completes the validation sentence;
 - **Original main metrics and all six AUC intervals: passed.** All point metrics, binned calibration errors and 2,000-resample AUC intervals recomputed from saved individual predictions.
 - **Corrected main, hospital and pooled results: passed.** All stored corrected point metrics recomputed from individual predictions; four outer folds each used 50 RF trials.
 - **Paired comparison interpretation: passed.** Both reported paired AUC intervals reproduced and include zero; equivalence and prior-only benefit are not claimed.
-- **All earlier notebook and writing requests: passed.** Albert Kabore, PhD student in Artificial Intelligence; introduction; six 50-word observation blocks; final insights; recommendations; conclusion last; pictured paragraph removed; all nine saved figures have Markdown subtitles.
+- **All earlier notebook and writing requests: passed.** Albert Kabore, PhD student in Artificial Intelligence; introduction; six 50-word observation blocks; final insights; recommendations; conclusion as the final body section followed by References; pictured paragraph removed; all nine saved figures have Markdown subtitles.
 - **Notebook integrity: passed.** All 20 original code cells and their saved outputs retained; no saved exception outputs; notebook schema valid.
-- **Word document, formatting and watermark objects: passed.** Word ZIP and XML valid; author correct; seven tables, four figures; all six 50-word blocks; conclusion last; no watermark objects or placeholders; academic edition saved separately because the earlier named Word file could not be replaced.
+- **Word document, formatting and watermark objects: passed.** Current APA edition has valid Word ZIP/XML; correct author; seven tables, four figures; all six 50-word blocks; 13 references after the conclusion; black text and white tables; no watermark objects detected. The revised edition has a distinct filename because the earlier named Word document was open.
 - **Rounding corrections: passed.** Literature-only accuracy is 77/184 = 41.8%; M1 NPV is 63/79 = 79.7%; percentages now formatted from full-precision results.
 - **Report rebuild dependencies: passed.** python-docx added to requirements and optional reporting dependencies; Python source parses.
-- **Automated model checks: passed.** Full pytest run in this review: 28 passed in 54.26 seconds, including Bayesian fitting/updating and unseen-hospital effect checks.
+- **Automated model checks: passed in the preceding numerical review.** 28 tests passed in 54.26 seconds, including Bayesian fitting/updating and unseen-hospital effect checks. Model tests were not repeated for the subsequent writing and reference revision.
 - **Published prior table and dataset definitions: passed.** All 32 table entries match the published Attia appendix reproduction; UCI confirms the 13-predictor, angiographic target definitions. The original 1979 full paper was not independently accessed.
 
 ## Source checks
@@ -64,7 +64,7 @@ This final audit recomputed scores and bootstrap intervals from saved prediction
 
 ## Submission files
 
-- [Word report](Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx)
+- [Word report with APA references](Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx)
 - [Markdown report](REPORT.md)
 - [Notebook](../notebooks/medical_diagnosis_system.ipynb)
 - [Machine-readable audit results](FINAL_AUDIT.json)
@@ -78,3 +78,11 @@ The earlier named Word file could not be replaced; the revised academic edition 
 ## Output-based interpretation revision
 
 Each of the 12 observation bullets, six final insight bullets, and six recommendations identifies numerical evidence and its interpretation or proposed analytical response. Comparisons distinguish original and corrected fits. Derived quantities include a 1.4% relative CV log-loss improvement, 712/920 correct hospital predictions, and 33 false positives among 51 negative VA records. These quantities were checked against saved results and predictions. Source files and derivations are recorded in [output_analysis_trace.json](output_analysis_trace.json). All six observation blocks remain 50 words.
+
+## APA references and academic report revision
+
+The report now includes an abstract, introduction, six substantive methods/results sections, discussion and final insights, recommendations, and conclusion. References immediately follows the conclusion, reflecting the latest requested ordering. The Word document uses 12-point Times New Roman, double-spaced body text, one-inch margins, header page numbers, and black horizontal table rules on white backgrounds. Figure and table numbers are bold, with italic titles. References begin on a new page and use alphabetical order, double spacing and 0.5-inch hanging indents.
+
+All 13 references are cited in the report and notebook. Their full authors, publication details and relevance were checked against journal, repository or author-maintained records linked in [reference_verification.json](reference_verification.json). The 1979 article's metadata and abstract were verified through PubMed; its numerical probability table was checked through Attia et al.'s published reproduction. No claim is made that every cited full text was independently accessed.
+
+The current writing revision passed [structural and formatting checks](academic_presentation_check.json), including citation coverage, reference placement, Word XML colours, table fills, observation counts and preservation of all 20 code cells with their outputs. Numerical evidence hashes also match the preceding commit. Rendered pagination was not inspected, and full model fitting was not repeated for this revision.

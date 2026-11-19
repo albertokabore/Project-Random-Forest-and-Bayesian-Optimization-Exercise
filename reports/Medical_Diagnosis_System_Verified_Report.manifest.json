@@ -1,14 +1,17 @@
 {
-  "edition": "Author revision with original and completed corrected analyses",
+  "edition": "Academic report with APA author-date citations and references after the conclusion",
   "author": "Albert Kabore",
   "academic_status": "PhD student in Artificial Intelligence",
   "date": "2026-11-18",
-  "document": "Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx",
-  "source_sha256": "afa452ef5b00b58ea0ad0681f39a7e761a77ba2a38a51bd862bbbd297d02b37c",
+  "document": "Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx",
+  "source_sha256": "fa9f1bff404f9128e16ef781b63c8e4bf9dcd9acc397aede30de220c6128c89d",
   "verification_sha256": "1318ce54c70bf4ec9072eb3d1fad58de3b6f0ad0a5c653be04af09d8dead43b6",
   "corrected_results_sha256": "afb36b0e68a7a0bcba77b9241252364e0241ce5755f042650acdaf81f3430e74",
   "tables": 7,
   "figures": 4,
   "text_colour": "000000",
-  "table_fill": "FFFFFF"
+  "table_fill": "FFFFFF",
+  "body_line_spacing": 2,
+  "reference_hanging_indent_inches": 0.5,
+  "references_follow_conclusion": true
 }

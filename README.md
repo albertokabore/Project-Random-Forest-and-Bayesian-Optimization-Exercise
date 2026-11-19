@@ -16,11 +16,13 @@ see [data verification](reports/data_verification.json). No synthetic records we
 
 **Report:** [reports/REPORT.md](reports/REPORT.md) · **Notebook:** [notebooks/medical_diagnosis_system.ipynb](notebooks/medical_diagnosis_system.ipynb)
 
-**Word report:** [Results analysis report](reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx).
+**Word report:** [Academic report with APA references](reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx).
 **Notebook reading view:** [Black text and white tables](reports/Albert_Kabore_Medical_Diagnosis_Notebook.html).
 **Final assignment and presentation audit:** [FINAL_AUDIT.md](reports/FINAL_AUDIT.md).
 The report and notebook include an introduction, six steps with 50-word observation blocks, final insights,
-recommendations, and a conclusion placed last. The observations, insights, and recommendations analyse
+recommendations, and a conclusion as the final body section. An alphabetical APA reference list follows
+the conclusion, with author-date citations throughout the text. Bibliographic checks are documented in
+[reference_verification.json](reports/reference_verification.json). The observations, insights, and recommendations analyse
 specific numerical outputs. Their source files and calculated comparisons are recorded in
 [output_analysis_trace.json](reports/output_analysis_trace.json).
 
@@ -50,6 +52,8 @@ scripts/
   verify_report.py            independently recomputes evidence; --bayesian refits the main Bayesian models
   submission_content.py       shared report and notebook prose, author details, and 50-word observations
   output_analysis.py          interpretations and recommendations derived from saved numerical outputs
+  academic_references.py      verified bibliographic records and APA reference entries
+  validate_academic_submission.py  checks APA citations, Word formatting and preserved evidence
   revise_submission.py        updates Markdown while preserving notebook code, outputs, and numerical evidence
   export_verified_word_report.py  builds the named Word report from REPORT.md
 notebooks/                    executed end-to-end analysis
@@ -102,6 +106,18 @@ python scripts/verify_report.py --bayesian
 This verifies the selected RF configuration and main Bayesian models; it does not repeat the complete RF search,
 hospital holdouts, or sequential experiments. Results are written to `reports/review_verification.json` and
 `reports/review_test_predictions.csv`.
+
+To rebuild the current report and notebook prose without executing model cells:
+
+```bash
+python scripts/revise_submission.py
+python scripts/export_verified_word_report.py
+python scripts/export_academic_notebook.py
+python scripts/validate_academic_submission.py
+```
+
+The final command checks reference coverage, document structure and formatting, the six 50-word observation
+blocks, and preservation of numerical evidence and notebook code/outputs against the current Git commit.
 
 ## Using the model in code
 

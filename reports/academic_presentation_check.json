@@ -1,7 +1,7 @@
 {
   "author": "Albert Kabore",
   "qualification": "PhD student in Artificial Intelligence",
-  "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx",
+  "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx",
   "word_colours": [
     "000000"
   ],
@@ -24,12 +24,19 @@
   "numerical_evidence_unchanged": true,
   "html_reading_view": "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html",
   "output_based_observations": 12,
-  "output_based_insight_bullets": 6,
+  "output_based_insights": 6,
   "output_justified_recommendations": 6,
+  "apa_references": 13,
+  "all_references_cited_in_report_and_notebook": true,
+  "reference_order": "Alphabetical, immediately after the conclusion",
+  "reference_format": "Double-spaced, 0.5-inch hanging indent, italic publication titles and volumes",
+  "body_format": "Times New Roman 12-point, double-spaced, one-inch margins, header page numbers",
+  "validation_scope": "Word XML structure, content and formatting validated; rendered pagination not inspected. Model fits not repeated for this writing revision.",
   "artifacts": {
-    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx": "ad5c1242e2711728f278b917da4ec279000dad716cb40d2de772aa5fe0e0b961",
-    "reports/REPORT.md": "afa452ef5b00b58ea0ad0681f39a7e761a77ba2a38a51bd862bbbd297d02b37c",
-    "notebooks/medical_diagnosis_system.ipynb": "74ffcd5c36c60962ce911899e16cbcacbd12bc035a9819d448c35dd98163168b",
-    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "91a646ba19cc800fc6e6538379e386a1373b4a4a78d66085f520c6b95536f07c"
+    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx": "2abd1bc9501f22f403a7c2719d1a7898a994972984eb9e61b5fd11c2e82e6d7e",
+    "reports/REPORT.md": "fa9f1bff404f9128e16ef781b63c8e4bf9dcd9acc397aede30de220c6128c89d",
+    "notebooks/medical_diagnosis_system.ipynb": "492ad099c66188928bfbc2d3415f16b6cfa5f8458dceb8b61ef8181cfc884c6b",
+    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "0aa19e1fb580a2158265cb25235eddd884ba5137d196668fbf0359c1fad6c892",
+    "reports/reference_verification.json": "ba2d46d2dc4a9ec6bdef34853dcfcbbdebe97fbbe9d98a92c4fd4dec3f27c74f"
   }
 }

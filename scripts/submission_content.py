@@ -16,6 +16,7 @@ AUTHOR = "Albert Kabore"
 QUALIFICATION = "PhD student in Artificial Intelligence"
 
 from output_analysis import derive_output_analysis
+from academic_references import reference_markdown
 
 OBSERVATIONS, FINAL_INSIGHTS, RECOMMENDATIONS, OUTPUT_ANALYSIS_TRACE = derive_output_analysis(ROOT)
 
@@ -34,19 +35,34 @@ NOTEBOOK_VISUALIZATION_SUBTITLES = {
     17: "### Figure 9. Sequential M1 updating: performance and coefficient uncertainty",
 }
 
-INTRODUCTION = """This study evaluates coronary artery disease (CAD) prediction using the UCI Heart Disease datasets. The target is the presence of angiographic disease. The analysis concerns diagnostic classification and does not evaluate future cardiovascular events or multiple disease outcomes.
+INTRODUCTION = """Estimating coronary artery disease (CAD) probability requires integrating clinical descriptors with diagnostic evidence. Diamond and Forrester (1979) developed a historical pre-test probability approach based on age, sex and symptoms; Detrano et al. (1989) examined CAD probability modelling across international clinical settings. These studies motivate assessing whether earlier probabilities remain useful in a different study sample.
 
-Random Forest classification with Bayesian hyperparameter optimization is compared with Bayesian logistic regression. The objectives are to assess predictions against recorded diagnoses, evaluate the incorporation of historical probabilities, and examine sequential updating with labelled patient batches. The data originate from a public research archive; no new patient recruitment or hospital data collection was undertaken."""
+This study evaluates angiographic CAD prediction using four processed datasets from the UCI Heart Disease archive (Janosi et al., 1989). Random Forest classification (Breiman, 2001), with Bayesian hyperparameter optimization, is compared with Bayesian logistic regression. The objectives are to assess predictions against recorded diagnoses, evaluate the incorporation of historical probabilities, and examine sequential updating with labelled patient batches. The analysis concerns one diagnostic outcome rather than future cardiovascular events. The data originate from a public research archive; no new patient recruitment or hospital data collection was undertaken."""
 
 CONCLUSION = """Random Forest classification, Bayesian optimization, and Bayesian inference were applied to binary CAD prediction using the UCI Heart Disease datasets. The raw files match the source archive, and the original main results were independently reproduced. Fitted models outperform the historical probability table on this test split, although a clear contribution from medical priors has not been established. Corrected hospital comparisons and approximate sequential updating provide additional evidence of methodological limitations. Independent prospective validation is required before clinical use can be considered."""
 
-REFERENCES = """- Diamond, G. A., and Forrester, J. S. (1979). Analysis of probability as an aid in the clinical diagnosis of coronary-artery disease. *New England Journal of Medicine, 300*, 1350–1358. [Publisher record](https://www.nejm.org/doi/abs/10.1056/NEJM197906143002402).
-- Attia, J. R., Sibbritt, D. W., Ewald, B. D., et al. (2004). Generating pre-test probabilities: a neglected area in clinical decision making. *Medical Journal of Australia, 180*, 449–454. [Published article and reproduced probability table](https://www.mja.com.au/journal/2004/180/9/generating-pre-test-probabilities-neglected-area-clinical-decision-making).
-- Detrano, R., Jánosi, A., Steinbrunn, W., et al. (1989). International application of a new probability algorithm for the diagnosis of coronary artery disease. *American Journal of Cardiology, 64*, 304–310. [PubMed record](https://pubmed.ncbi.nlm.nih.gov/2756873/).
-- Janosi, A., Steinbrunn, W., Pfisterer, M., and Detrano, R. (1989). Heart Disease [Dataset]. UCI Machine Learning Repository. [Dataset and recommended citation](https://doi.org/10.24432/C52P4X). The donation date is 1988; UCI's recommended citation year is 1989.
-- PyMC development team. [Package rename and model-building API](https://www.pymc.io/blog/v4_announcement.html).
-- Optuna documentation. [Tree-structured Parzen Estimator algorithm](https://optuna.readthedocs.io/en/v3.0.5/reference/samplers/generated/optuna.samplers.TPESampler.html).
-- scikit-learn documentation. [Nested and non-nested cross-validation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html)."""
+REFERENCES = reference_markdown()
+
+
+def abstract_text() -> str:
+    original, verification, corrected = read_results()
+    models = {row["model"]: row for row in verification["test_metrics"]}
+    m2 = models["M2 Bayesian (refined)"]
+    rf = models["Random Forest (Bayesian-optimised)"]
+    pair = corrected["main"]["paired_bootstrap"]["M2_minus_M0"]
+    pooled = corrected["loho_summary"]["pooled_out_of_hospital"]["M2 Bayesian"]
+    return (
+        "This study assessed whether Random Forest optimization and Bayesian incorporation of historical medical probabilities improve angiographic coronary artery disease prediction. "
+        "Four processed UCI datasets provided 920 records, including 509 positive diagnoses. A hospital-and-diagnosis-stratified split allocated 736 records to training and 184 to testing. "
+        "Weak-prior, literature-informed and hierarchical Bayesian logistic models were compared with default and Tree-structured Parzen Estimator-tuned Random Forests. "
+        "Evaluation included discrimination, classification, probability scores, corrected hospital holdouts and approximate sequential updating. "
+        f"In the independently reproduced original test results, the refined hierarchical model achieved ROC-AUC {m2['roc_auc']:.4f}, accuracy {m2['accuracy']:.1%} and log loss {m2['log_loss']:.4f}; "
+        f"the tuned forest achieved ROC-AUC {rf['roc_auc']:.4f} and accuracy {rf['accuracy']:.1%}. "
+        f"The corrected hierarchical-versus-weak-prior AUC difference was {pair['auc_diff']:.4f} (95% paired bootstrap interval {pair['auc_diff_95ci'][0]:.4f} to {pair['auc_diff_95ci'][1]:.4f}). "
+        f"Corrected out-of-hospital hierarchical predictions achieved pooled ROC-AUC {pooled['roc_auc']:.4f} and accuracy {pooled['accuracy']:.1%}. "
+        "Sequential coefficient uncertainty decreased, although the final update worsened log loss. Fitted models exceeded the historical probability table on this split, but a clear benefit attributable to medical priors was not established. "
+        "Historical sampling, missingness, repeated test inspection and an approximate updating procedure limit interpretation. Prospective validation is needed to assess clinical applicability."
+    )
 
 
 def observation_block(step: int) -> str:
@@ -120,17 +136,23 @@ def build_markdown() -> str:
 **Academic status:** {QUALIFICATION}  
 **Date:** November 18, 2026
 
+## Abstract
+
+{abstract_text()}
+
+*Keywords:* coronary artery disease, Random Forest, Bayesian optimization, Bayesian updating, diagnostic prediction
+
 ## Introduction
 
 {INTRODUCTION}
 
-## Step 1. Data collection
+## Data Collection and Preprocessing
 
 The four processed UCI files contain 920 records, including 509 positive diagnoses. Each record has 13 predictors and a diagnosis label. The predictors describe age, sex, chest-pain type, resting blood pressure, cholesterol, fasting glucose, resting ECG, maximum exercise heart rate, exercise-induced angina, ST depression, ST slope, vessels coloured by fluoroscopy, and a thallium result. The binary outcome is `disease = (num > 0)`.
 
 {site_table}
 
-The raw files and their documentation match UCI's official archive byte for byte. This confirms their source; it does not independently audit the original hospital measurements. UCI's landing-page total of 303 describes Cleveland, whereas this project pools four processed datasets.
+The raw files and their documentation match UCI's official archive byte for byte (Janosi et al., 1989). This confirms their source; it does not independently audit the original hospital measurements. UCI's landing-page total of 303 describes Cleveland, whereas this project pools four processed datasets.
 
 The processed files provide limited clinical history, mainly demographics and test measurements. This implementation addresses one CAD outcome. A system for several diseases would need additional labelled outcomes and suitable priors for each disease.
 
@@ -140,9 +162,9 @@ The 80/20 split is stratified by hospital and diagnosis: 736 training records an
 
 {observation_block(1)}
 
-## Step 2. Prior knowledge integration
+## Prior Knowledge Integration
 
-The historical Diamond–Forrester table assigns a pre-test CAD probability using age, sex and chest-pain category. All 32 encoded entries were checked against the table reproduced in Attia and colleagues' published article. The implementation maps ages outside 30–69 to an endpoint decade, affecting 35 records. That mapping is an assumption, not a published estimate for those ages.
+The historical Diamond–Forrester table assigns a pre-test CAD probability using age, sex and chest-pain category (Diamond & Forrester, 1979). All 32 encoded entries were checked against the table reproduced by Attia et al. (2004). The implementation maps ages outside 30–69 to an endpoint decade, affecting 35 records. That mapping is an assumption, not a published estimate for those ages.
 
 Historical probabilities differ substantially from observed training prevalence. Among training records, the table assigns asymptomatic cases an average risk of 8.7%, while their observed disease rate is 79.2%. For typical angina, the corresponding values are 86.7% and 41.7%. This discrepancy warrants assessment of transportability; the available variables do not establish its cause.
 
@@ -158,7 +180,9 @@ Clinical coefficient priors favour expected directions for selected predictors. 
 
 {observation_block(2)}
 
-## Step 3. Model development
+## Model Development
+
+### Bayesian Logistic Models
 
 The Bayesian models use a Bernoulli likelihood with a logit link. M0 uses weak coefficient priors and ordinary predictors. M1 adds a learned coefficient on the literature logit predictor and clinical coefficient priors. M2 also adds chest-pain deviations and partially pooled hospital intercepts. Its general form is:
 
@@ -167,19 +191,27 @@ logit P(CAD_i) = intercept + gamma * logit(literature_i)
                 + predictors_i * beta + hospital_effect_i
 ```
 
-PyMC samples the main models with four NUTS chains, each retaining 1,000 draws after 1,000 tuning iterations. The original main fits had zero divergences and favourable saved diagnostics. The corrected analysis uses stricter acceptance settings and records diagnostics for each hospital fit. These diagnostics assess sampling behaviour; model validity requires separate predictive evaluation.
+The models are implemented in PyMC (Abril-Pla et al., 2023), using the No-U-Turn sampler (NUTS; Hoffman & Gelman, 2014). Each main fit uses four chains, each retaining 1,000 draws after 1,000 tuning iterations. The original main fits had zero divergences and favourable saved diagnostics. The corrected analysis uses stricter acceptance settings and records diagnostics for each hospital fit. These diagnostics assess sampling behaviour; model validity requires separate predictive evaluation.
 
-The Random Forest is fitted in a preprocessing pipeline. Optuna's Tree-structured Parzen Estimator (TPE) searches eight hyperparameters using five-fold training-set log loss. TPE uses earlier trial results to propose new settings. This optimization is separate from Bayesian inference about disease probability.
+### Random Forest and Hyperparameter Optimization
+
+The Random Forest classifier (Breiman, 2001) is fitted in a preprocessing pipeline. Optuna (Akiba et al., 2019) applies the Tree-structured Parzen Estimator (TPE; Bergstra et al., 2011) to eight hyperparameters using five-fold training-set log loss. TPE uses earlier trial results to propose new settings. This optimization is separate from Bayesian inference about disease probability.
 
 The original search used 50 trials per method. Its best CV log loss was **{search['bo_best_cv_log_loss']:.4f}** for TPE and **{search['random_best_cv_log_loss']:.4f}** for random search. This is one seeded comparison, so it does not establish a reliable advantage across repeated searches.
 
 The selected forest has {params['n_estimators']} trees, maximum depth {params['max_depth']}, minimum leaf size {params['min_samples_leaf']}, minimum split size {params['min_samples_split']}, `max_features = {params['max_features']}`, `max_samples = {params['max_samples']:.6f}`, `class_weight = {params['class_weight']}` and `criterion = {params['criterion']}`. Its test AUC and log loss improve on the default forest, while accuracy decreases by one correctly classified record.
 
-For one Hungarian test record, a 53-year-old man with atypical angina, the literature table assigns a probability of 58.9% and fitted M2 estimates 8.7% conditional on the recorded features; the recorded CAD diagnosis is negative. This is a feature-conditioned prediction. Parameter updating with newly confirmed diagnoses is a separate operation, evaluated in Step 5. Selected examples do not establish overall accuracy.
+For one Hungarian test record, a 53-year-old man with atypical angina, the literature table assigns a probability of 58.9% and fitted M2 estimates 8.7% conditional on the recorded features; the recorded CAD diagnosis is negative. This is a feature-conditioned prediction. Parameter updating with newly confirmed diagnoses is a separate operation, evaluated under model refinement and sequential updating. Selected examples do not establish overall accuracy.
 
 {observation_block(3)}
 
-## Step 4. Validation against recorded diagnoses
+## Validation and Results
+
+### Evaluation Criteria
+
+Discrimination is assessed using ROC-AUC, while sensitivity, specificity and predictive values describe classification at a 0.5 threshold. Brier score and logarithmic loss assess predicted probabilities using proper scoring rules (Gneiting & Raftery, 2007). Lower values indicate better probability scores; they do not by themselves establish clinical utility.
+
+### Original Held-Out Test Results
 
 The following table reports the original, independently reproduced test results at a 0.5 threshold. The AUC intervals are percentile bootstrap intervals from 2,000 resamples. They describe uncertainty conditional on these fitted models rather than all training and model-selection variability.
 
@@ -191,7 +223,9 @@ M2 correctly classifies 155 of 184 records. It misses 11 of 102 positive cases a
 
 The corrected analysis repeats the main fits with stricter sampling settings, so small Monte Carlo differences are expected. Its paired comparison gives M2 minus M0 AUC of **{pair['auc_diff']:.4f}**, with a 95% interval from **{pair['auc_diff_95ci'][0]:.4f} to {pair['auc_diff_95ci'][1]:.4f}**. That interval includes zero. It neither establishes a clear advantage nor proves equivalence.
 
-The original hospital experiment reused forest settings selected with records from all four hospitals and sampled unseen-hospital effects independently by patient. A completed corrected run now tunes the forest inside each three-hospital training fold, using 50 TPE trials, and shares one unseen-hospital effect across its patients within each posterior draw. The corrected AUC results are:
+### Corrected Hospital-Holdout Evaluation
+
+The original hospital experiment reused forest settings selected with records from all four hospitals and sampled unseen-hospital effects independently by patient. A completed corrected run now tunes the forest inside each three-hospital training fold, using 50 TPE trials, and shares one unseen-hospital effect across its patients within each posterior draw. Separating inner tuning from outer evaluation addresses the model-selection bias discussed by Cawley and Talbot (2010). The corrected AUC results are:
 
 {hospital_table(corrected)}
 
@@ -203,7 +237,9 @@ The final saved hospital fits have zero divergences, rounded maximum R-hat at mo
 
 {observation_block(4)}
 
-## Step 5. Iteration and Bayesian updating
+## Model Refinement and Sequential Updating
+
+### Refinement and Companion Comparison
 
 The progression from M0 to M1 to M2 responds to a practical problem: the literature-based model fits this cohort less well than the weak-prior baseline. M2 allows symptom relationships and hospital differences to adjust. All variants retain the Bernoulli likelihood; the refinements change the predictors, priors and hospital structure.
 
@@ -215,7 +251,9 @@ The corrected analysis also fits a hierarchical model without the literature pre
 
 The paired AUC difference between corrected M2 and this companion model is **{ablation_pair['auc_diff']:.4f}** (95% interval **{ablation_pair['auc_diff_95ci'][0]:.4f} to {ablation_pair['auc_diff_95ci'][1]:.4f}**). Their hospital structure is shared, but their feature representation and shrinkage differ: the companion model restores ordinary age and sex predictors and does not use adaptive chest-pain shrinkage. This is not a strict prior-only ablation. Similar performance therefore cannot establish that prior knowledge has no effect.
 
-Training-data PSIS-LOO places the companion model about 3.1 ELPD above M2, with a difference standard error of about 3.0. Its stacking weight is about 0.76, which is a predictive-combination weight rather than the probability that it is the true model. Preprocessing remains fixed in these pointwise LOO calculations.
+Training-data Pareto-smoothed importance-sampling leave-one-out cross-validation (PSIS-LOO; Vehtari et al., 2017) places the companion model about 3.1 expected log predictive density (ELPD) above M2, with a difference standard error of about 3.0. Its stacking weight is about 0.76. Stacking combines predictive distributions rather than assigning posterior probabilities that a model is true (Yao et al., 2018). Preprocessing remains fixed in these pointwise LOO calculations.
+
+### Approximate Sequential Updating
 
 The original sequential experiment uses M1. Its posterior is approximated by a multivariate Normal distribution after each batch of 184 labelled records, then used as the next prior. The initial M1 prediction includes coefficient priors; it is not the literature table alone.
 
@@ -227,7 +265,7 @@ The final update slightly reduces AUC and worsens log loss, while mean coefficie
 
 {observation_block(5)}
 
-## Step 6. Reporting, limitations and reproducibility
+## Reproducibility and Limitations
 
 The analysis addresses the six substantive components in the supplied assignment instructions. Detailed grading criteria were unavailable; alignment could therefore be assessed only against the assignment brief.
 
@@ -239,15 +277,11 @@ The main evidence files are `reports/metrics.json`, `reports/review_verification
 
 The independent verification record lists Python {verification['python']}, PyMC {verification['versions']['pymc']}, scikit-learn {verification['versions']['scikit-learn']} and Optuna {verification['versions']['optuna']}, along with the remaining package versions. The dependency files specify minimum versions rather than a complete environment lock. Rebuilding the Word document also requires `python-docx`, which is included in the reporting dependencies.
 
-Data definitions, historical probabilities, and methodological choices are documented in the following sources:
-
-{REFERENCES}
-
 {observation_block(6)}
 
-## Final insights
+## Discussion and Final Insights
 
-{FINAL_INSIGHTS}
+{FINAL_INSIGHTS.replace(chr(10) + '- ', chr(10) + chr(10)).removeprefix('- ')}
 
 ## Recommendations
 
@@ -256,6 +290,10 @@ Data definitions, historical probabilities, and methodological choices are docum
 ## Conclusion
 
 {CONCLUSION}
+
+## References
+
+{REFERENCES}
 """
     return text
 
@@ -281,41 +319,43 @@ def revise_notebook(notebook):
                 md(NOTEBOOK_VISUALIZATION_SUBTITLES[index])
             revised.append(code[index])
 
-    md(f"# Medical Diagnosis System: Random Forest and Bayesian Optimization\n\n**Author:** {AUTHOR}  \n**Academic status:** {QUALIFICATION}\n\n## Introduction\n\n{INTRODUCTION}\n\nInitial execution outputs are retained for provenance. Corrected hospital comparisons are reported separately using the completed analysis in `reports/corrected/corrected_results.json`. The accompanying report is `reports/REPORT.md`.")
+    md(f"# Medical Diagnosis System: Random Forest and Bayesian Optimization\n\n**Author:** {AUTHOR}  \n**Academic status:** {QUALIFICATION}\n\n## Abstract\n\n{abstract_text()}\n\n## Introduction\n\n{INTRODUCTION}\n\nInitial execution outputs are retained for provenance. Corrected hospital comparisons are reported separately using the completed analysis in `reports/corrected/corrected_results.json`. The accompanying report is `reports/REPORT.md`.")
     keep(0)
     md("## Step 1. Data collection")
     keep(1, 2, 3)
     md(observation_block(1))
-    md("## Step 2. Prior knowledge integration\n\nThe Diamond–Forrester table provides historical probabilities by age, sex and chest-pain category. Its 32 entries match the reproduced published table. Clamping ages outside 30–69 affects 35 records and is an assumption. The comparison below shows a large mismatch between the literature table and observed training prevalence. Selection into angiography cohorts is plausible, but its causal role is not established by these records.")
+    md("## Step 2. Prior knowledge integration\n\nThe Diamond–Forrester table provides historical probabilities by age, sex and chest-pain category (Diamond & Forrester, 1979). Its 32 entries match the table reproduced by Attia et al. (2004). Clamping ages outside 30–69 affects 35 records and is an assumption. The comparison below shows a large mismatch between the literature table and observed training prevalence. Selection into angiography cohorts is plausible, but its causal role is not established by these records.")
     keep(4, 5)
     md("The Beta–Binomial example separately updates hospital prevalence. Each prior has strength 10 and is centred on the training records' average literature probability. These Beta posteriors do not enter the patient-level models. Test-prevalence containment is descriptive, particularly because the split is stratified by diagnosis.")
     keep(6)
     md("Clinical coefficient means and SD 0.5 are modelling assumptions. They favour directions without fixing the sign. Continuous features are standardised; binary and categorical contrasts are 0/1. The archived rationale table describes `fbs` as diabetes and `ca` as calcification. The source descriptions were subsequently corrected to match UCI's glucose-threshold and fluoroscopy vessel-count definitions; prior values were unchanged.")
     keep(7)
     md(observation_block(2))
-    md("## Step 3. Model development\n\n### Bayesian models\n\nM0 uses weak priors. M1 adds the literature logit predictor and clinical coefficient priors. M2 adds chest-pain deviations and partially pooled hospital effects. Each uses a Bernoulli likelihood with a logit link. The saved main run uses four chains with 1,000 tuning and 1,000 retained draws per chain. The summaries below describe that original run, not the later corrected fits.")
+    md("## Step 3. Model development\n\n### Bayesian models\n\nThe models use PyMC (Abril-Pla et al., 2023) and NUTS sampling (Hoffman & Gelman, 2014). M0 uses weak priors. M1 adds the literature logit predictor and clinical coefficient priors. M2 adds chest-pain deviations and partially pooled hospital effects. Each uses a Bernoulli likelihood with a logit link. The saved main run uses four chains with 1,000 tuning and 1,000 retained draws per chain. The summaries below describe that original run, not the later corrected fits.")
     keep(8, 9, 10)
-    md("### Random Forest and Bayesian optimization\n\nThe preprocessing pipeline is fitted inside training folds. Optuna TPE searches eight forest settings using five-fold CV log loss, with 50 trials per search method. The original best losses are 0.4169 for TPE and 0.4228 for random search. This single seeded comparison does not establish general search superiority. Hyperparameter optimization is separate from Bayesian updating of disease probabilities.")
+    md("### Random Forest and Bayesian optimization\n\nThe Random Forest (Breiman, 2001) preprocessing pipeline is fitted inside training folds. Optuna (Akiba et al., 2019) implements TPE (Bergstra et al., 2011) to search eight forest settings using five-fold CV log loss, with 50 trials per search method. The original best losses are 0.4169 for TPE and 0.4228 for random search. This single seeded comparison does not establish general search superiority. Hyperparameter optimization is separate from Bayesian updating of disease probabilities.")
     keep(11, 12)
     md(observation_block(3))
-    md("## Step 4. Validation against recorded diagnoses\n\nThe following original test results were independently reproduced. The threshold is 0.5, with AUC intervals from 2,000 bootstrap resamples. Original M2 AUC is approximately 0.89945 and accuracy is 84.2%, tied with the default forest. M2 misses 11 positive cases and produces 18 false positives. Repeated inspection of this test set limits claims that it remained untouched throughout development.")
+    md("## Step 4. Validation against recorded diagnoses\n\nThe following original test results were independently reproduced. The threshold is 0.5, with AUC intervals from 2,000 bootstrap resamples. Brier score and log loss evaluate probabilistic forecasts using proper scoring rules (Gneiting & Raftery, 2007). Original M2 AUC is approximately 0.89945 and accuracy is 84.2%, tied with the default forest. M2 misses 11 positive cases and produces 18 false positives. Repeated inspection of this test set limits claims that it remained untouched throughout development.")
     keep(13, 14)
     md("### Individual examples\n\nThese selected records illustrate prediction rather than provide an additional validation sample. A 94% credible interval describes uncertainty under the fitted model; it is not a 94% guarantee that a diagnosis is correct. A case without CAD whose risk rises from 5.2% to 12.1% shows that the model does not always move toward the observed outcome.")
     keep(15)
     md("### Original hospital experiment: historical outputs\n\nThe archived hospital evaluation used forest settings influenced by all four hospitals. Its M2 predictor drew independent hospital effects for patients at the same unseen site, and two fits recorded four divergences each. These issues were addressed in a subsequent completed analysis. Historical code and outputs are retained for provenance; corrected comparisons are reported in the following subsection.")
     keep(16)
-    md("### Completed corrected hospital analysis\n\nSource: `reports/corrected/corrected_results.json`. The forest is tuned with 50 TPE trials inside each outer training fold. M2 shares each posterior hospital-effect draw across that hospital's patients. All final saved fits have zero divergences; rounded maximum R-hat is at most 1.01, and minimum bulk ESS is at least 1,549. The M2 Hungary fold required a refit at acceptance target 0.99. These retrospective comparisons still require independent prospective validation.\n\n" + hospital_table(corrected) + "\n\nPooled M2 AUC is 0.8509 and accuracy is 77.4%; pooled AUC differs from the average of hospital AUCs. Switzerland contains only eight negative cases, and weak specificity at some sites remains a concern.")
+    md("### Completed corrected hospital analysis\n\nSource: `reports/corrected/corrected_results.json`. The forest is tuned with 50 TPE trials inside each outer training fold, separating selection from evaluation to address selection bias (Cawley & Talbot, 2010). M2 shares each posterior hospital-effect draw across that hospital's patients. All final saved fits have zero divergences; rounded maximum R-hat is at most 1.01, and minimum bulk ESS is at least 1,549. The M2 Hungary fold required a refit at acceptance target 0.99. These retrospective comparisons still require independent prospective validation.\n\n" + hospital_table(corrected) + "\n\nPooled M2 AUC is 0.8509 and accuracy is 77.4%; pooled AUC differs from the average of hospital AUCs. Switzerland contains only eight negative cases, and weak specificity at some sites remains a concern.")
     md(observation_block(4))
     md("## Step 5. Iteration and Bayesian updating\n\nA later hierarchical model removes the literature predictor and clinical coefficient means. It restores ordinary age and sex predictors and changes chest-pain shrinkage, so it is not a strict prior-only ablation. Similar performance does not prove that medical priors have no effect. These completed corrected-fit results are separate from the original output cells:\n\n" + ablation_table(corrected))
+    md("Training-data PSIS-LOO follows the predictive evaluation approach of Vehtari et al. (2017). The companion model's ELPD advantage over M2 is about 3.1, with standard error about 3.0. Its approximately 0.76 stacking weight concerns predictive combination rather than the probability that the model is true (Yao et al., 2018). Preprocessing is fixed in this pointwise comparison.")
     md("### Sequential updating of M1\n\nThe following original experiment updates M1 with four labelled batches. Each posterior is approximated as multivariate Normal for the next prior. The preprocessor was fitted using all training covariates, so this is a retrospective fixed-feature simulation. Mean coefficient SD decreases, but final AUC slightly declines and log loss worsens. M2 does not support this Gaussian update interface.")
     keep(17, 18)
     md("Sequential and full-batch M1 predictions differ by at most 0.01855 and correlate at 0.9998. This is close agreement in one approximate run, not exact posterior equivalence.\n\n" + observation_block(5))
     md("## Step 6. Reporting and reproducibility\n\nThe following cell records the initial export procedure. Initial and corrected outputs are stored separately. Source-data hashes, individual predictions, model code, and completed result files document the analytical process. Detailed grading criteria were unavailable; alignment could therefore be assessed only against the supplied assignment brief.")
     keep(19)
-    md("### Sources and interpretation limits\n\nThese are historical angiography records, with substantial missingness and no identifiers for a full patient-overlap audit. Prospective calibration, subgroup reliability, predictor availability and clinical benefit remain unestablished. The report distinguishes original predictions from stricter corrected fits.\n\n" + REFERENCES + "\n\n" + observation_block(6))
+    md("### Interpretation limits\n\nThese are historical angiography records, with substantial missingness and no identifiers for a full patient-overlap audit. Prospective calibration, subgroup reliability, predictor availability and clinical benefit remain unestablished. The report distinguishes original predictions from stricter corrected fits.\n\n" + observation_block(6))
     md("## Final insights\n\n" + FINAL_INSIGHTS)
     md("## Recommendations\n\n" + RECOMMENDATIONS)
     md("## Conclusion\n\n" + CONCLUSION)
+    md("## References\n\n" + REFERENCES)
     notebook.cells = revised
     notebook.metadata["authors"] = [{"name": AUTHOR, "role": QUALIFICATION}]
     notebook.metadata["report_revision"] = {"date": "2026-11-18", "author": AUTHOR,

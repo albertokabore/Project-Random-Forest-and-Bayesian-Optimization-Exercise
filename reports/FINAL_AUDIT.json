@@ -30,7 +30,7 @@
     {
       "check": "All earlier notebook and writing requests",
       "status": "passed",
-      "detail": "Albert Kabore, PhD student in Artificial Intelligence; introduction; six 50-word observation blocks; final insights; recommendations; conclusion last; pictured paragraph removed; all nine saved figures have Markdown subtitles."
+      "detail": "Author details, introduction, six 50-word observation blocks, output-based insights and recommendations retained; conclusion is the final body section, followed by References under the latest instruction. Removed notebook paragraph remains absent; all nine figures have subtitles."
     },
     {
       "check": "Notebook integrity",
@@ -40,7 +40,7 @@
     {
       "check": "Word document, formatting and watermark objects",
       "status": "passed",
-      "detail": "The academic edition has valid Word ZIP/XML structure, black text, white table cells, black borders, seven tables, four figures, six 50-word observation blocks and the conclusion last. No watermark objects or placeholders are present. The earlier named Word file could not be replaced; the academic edition is saved separately."
+      "detail": "Current APA edition passes ZIP/XML, colour and formatting checks: black text, white tables, black horizontal rules, seven tables, four figures, six 50-word observation blocks and 13 references after the conclusion. No watermark objects detected."
     },
     {
       "check": "Rounding corrections",
@@ -55,7 +55,7 @@
     {
       "check": "Automated model checks",
       "status": "passed",
-      "detail": "Full pytest run in this review: 28 passed in 54.26 seconds, including Bayesian fitting/updating and unseen-hospital effect checks."
+      "detail": "The preceding numerical review recorded 28 pytest passes in 54.26 seconds, including Bayesian fitting/updating and unseen-hospital effect checks. Model tests were not rerun for this prose/reference revision."
     },
     {
       "check": "Published prior table and dataset definitions",
@@ -71,6 +71,11 @@
       "check": "Output-based interpretation revision",
       "status": "passed",
       "detail": "All 12 observation bullets, six final insight bullets and six recommendations use specific saved results. Relative improvements, correct classifications and VA false positives were independently checked against saved predictions; numerical evidence and 20 executed code cells are unchanged."
+    },
+    {
+      "check": "APA citations and reference placement",
+      "status": "passed",
+      "detail": "Thirteen full references, alphabetically ordered and cited in both report and notebook; Word references start on a new page after Conclusion with double spacing and 0.5-inch hanging indents. Primary bibliographic verification records are linked in reference_verification.json."
     }
   ],
   "original_auc_intervals_recomputed": [
@@ -112,30 +117,71 @@
     "Saved predictions and bootstrap intervals were recomputed; the full RF searches and all full-budget MCMC fits were not repeated in this final review."
   ],
   "artifacts": {
-    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx": "ad5c1242e2711728f278b917da4ec279000dad716cb40d2de772aa5fe0e0b961",
-    "reports/REPORT.md": "afa452ef5b00b58ea0ad0681f39a7e761a77ba2a38a51bd862bbbd297d02b37c",
-    "notebooks/medical_diagnosis_system.ipynb": "74ffcd5c36c60962ce911899e16cbcacbd12bc035a9819d448c35dd98163168b",
-    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "91a646ba19cc800fc6e6538379e386a1373b4a4a78d66085f520c6b95536f07c"
+    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx": "2abd1bc9501f22f403a7c2719d1a7898a994972984eb9e61b5fd11c2e82e6d7e",
+    "reports/REPORT.md": "fa9f1bff404f9128e16ef781b63c8e4bf9dcd9acc397aede30de220c6128c89d",
+    "notebooks/medical_diagnosis_system.ipynb": "492ad099c66188928bfbc2d3415f16b6cfa5f8458dceb8b61ef8181cfc884c6b",
+    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "0aa19e1fb580a2158265cb25235eddd884ba5137d196668fbf0359c1fad6c892",
+    "reports/reference_verification.json": "ba2d46d2dc4a9ec6bdef34853dcfcbbdebe97fbbe9d98a92c4fd4dec3f27c74f"
   },
   "sources": [
     {
-      "title": "UCI Heart Disease",
-      "url": "https://archive.ics.uci.edu/dataset/45/heart%2Bdisease"
+      "title": "Abril-Pla et al., 2023",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37705656/"
     },
     {
-      "title": "Attia et al. published article and reproduced prior table",
+      "title": "Akiba et al., 2019",
+      "url": "https://raw.githubusercontent.com/optuna/optuna/master/CITATION.cff"
+    },
+    {
+      "title": "Attia et al., 2004",
       "url": "https://www.mja.com.au/journal/2004/180/9/generating-pre-test-probabilities-neglected-area-clinical-decision-making"
     },
     {
-      "title": "PyMC official rename and model API announcement",
-      "url": "https://www.pymc.io/blog/v4_announcement.html"
+      "title": "Bergstra et al., 2011",
+      "url": "https://papers.nips.cc/paper_files/paper/2011/file/86e8f7ab32cfd12577bc2619bc635690-Metadata.json"
+    },
+    {
+      "title": "Breiman, 2001",
+      "url": "https://link.springer.com/article/10.1023/A:1010933404324"
+    },
+    {
+      "title": "Cawley & Talbot, 2010",
+      "url": "https://jmlr.org/papers/v11/cawley10a.html"
+    },
+    {
+      "title": "Detrano et al., 1989",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/2756873/"
+    },
+    {
+      "title": "Diamond & Forrester, 1979",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/440357/"
+    },
+    {
+      "title": "Gneiting & Raftery, 2007",
+      "url": "https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf"
+    },
+    {
+      "title": "Hoffman & Gelman, 2014",
+      "url": "https://jmlr.org/papers/v15/hoffman14a.html"
+    },
+    {
+      "title": "Janosi et al., 1989",
+      "url": "https://archive.ics.uci.edu/dataset/45/heart+disease"
+    },
+    {
+      "title": "Vehtari et al., 2017",
+      "url": "https://link.springer.com/article/10.1007/s11222-016-9696-4"
+    },
+    {
+      "title": "Yao et al., 2018",
+      "url": "https://mc-stan.org/loo/authors.html"
     }
   ],
   "qualification": "PhD student in Artificial Intelligence",
   "presentation_update": {
     "author": "Albert Kabore",
     "qualification": "PhD student in Artificial Intelligence",
-    "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx",
+    "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx",
     "word_colours": [
       "000000"
     ],
@@ -158,13 +204,20 @@
     "numerical_evidence_unchanged": true,
     "html_reading_view": "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html",
     "output_based_observations": 12,
-    "output_based_insight_bullets": 6,
+    "output_based_insights": 6,
     "output_justified_recommendations": 6,
+    "apa_references": 13,
+    "all_references_cited_in_report_and_notebook": true,
+    "reference_order": "Alphabetical, immediately after the conclusion",
+    "reference_format": "Double-spaced, 0.5-inch hanging indent, italic publication titles and volumes",
+    "body_format": "Times New Roman 12-point, double-spaced, one-inch margins, header page numbers",
+    "validation_scope": "Word XML structure, content and formatting validated; rendered pagination not inspected. Model fits not repeated for this writing revision.",
     "artifacts": {
-      "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx": "ad5c1242e2711728f278b917da4ec279000dad716cb40d2de772aa5fe0e0b961",
-      "reports/REPORT.md": "afa452ef5b00b58ea0ad0681f39a7e761a77ba2a38a51bd862bbbd297d02b37c",
-      "notebooks/medical_diagnosis_system.ipynb": "74ffcd5c36c60962ce911899e16cbcacbd12bc035a9819d448c35dd98163168b",
-      "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "91a646ba19cc800fc6e6538379e386a1373b4a4a78d66085f520c6b95536f07c"
+      "reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx": "2abd1bc9501f22f403a7c2719d1a7898a994972984eb9e61b5fd11c2e82e6d7e",
+      "reports/REPORT.md": "fa9f1bff404f9128e16ef781b63c8e4bf9dcd9acc397aede30de220c6128c89d",
+      "notebooks/medical_diagnosis_system.ipynb": "492ad099c66188928bfbc2d3415f16b6cfa5f8458dceb8b61ef8181cfc884c6b",
+      "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "0aa19e1fb580a2158265cb25235eddd884ba5137d196668fbf0359c1fad6c892",
+      "reports/reference_verification.json": "ba2d46d2dc4a9ec6bdef34853dcfcbbdebe97fbbe9d98a92c4fd4dec3f27c74f"
     }
   }
 }

@@ -13106,6 +13106,7 @@ table { border-collapse: collapse !important; }
 th, td { border: 1px solid #000000 !important; padding: 5px 7px !important; }
 a, a:visited, a:hover, a:active { color: #000000 !important; }
 pre, code { font-family: Consolas, monospace !important; }
+#References ~ p { padding-left: 0.5in; text-indent: -0.5in; line-height: 2; }
 @media print {
   body, #notebook-container { background: #ffffff !important; box-shadow: none !important; }
   h1, h2, h3, h4, .output_png { break-inside: avoid; }
@@ -13117,12 +13118,13 @@ pre, code { font-family: Consolas, monospace !important; }
 <main>
 <div class="border-box-sizing" id="notebook" tabindex="-1">
 <div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=e9d532be7aae"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=11059128569e"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Medical-Diagnosis-System:-Random-Forest-and-Bayesian-Optimization">Medical Diagnosis System: Random Forest and Bayesian Optimization<a class="anchor-link" href="#Medical-Diagnosis-System:-Random-Forest-and-Bayesian-Optimization">¶</a></h1><p><strong>Author:</strong> Albert Kabore<br/>
 <strong>Academic status:</strong> PhD student in Artificial Intelligence</p>
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h2><p>This study evaluates coronary artery disease (CAD) prediction using the UCI Heart Disease datasets. The target is the presence of angiographic disease. The analysis concerns diagnostic classification and does not evaluate future cardiovascular events or multiple disease outcomes.</p>
-<p>Random Forest classification with Bayesian hyperparameter optimization is compared with Bayesian logistic regression. The objectives are to assess predictions against recorded diagnoses, evaluate the incorporation of historical probabilities, and examine sequential updating with labelled patient batches. The data originate from a public research archive; no new patient recruitment or hospital data collection was undertaken.</p>
+<h2 id="Abstract">Abstract<a class="anchor-link" href="#Abstract">¶</a></h2><p>This study assessed whether Random Forest optimization and Bayesian incorporation of historical medical probabilities improve angiographic coronary artery disease prediction. Four processed UCI datasets provided 920 records, including 509 positive diagnoses. A hospital-and-diagnosis-stratified split allocated 736 records to training and 184 to testing. Weak-prior, literature-informed and hierarchical Bayesian logistic models were compared with default and Tree-structured Parzen Estimator-tuned Random Forests. Evaluation included discrimination, classification, probability scores, corrected hospital holdouts and approximate sequential updating. In the independently reproduced original test results, the refined hierarchical model achieved ROC-AUC 0.8995, accuracy 84.2% and log loss 0.3968; the tuned forest achieved ROC-AUC 0.8900 and accuracy 83.7%. The corrected hierarchical-versus-weak-prior AUC difference was 0.0049 (95% paired bootstrap interval -0.0072 to 0.0167). Corrected out-of-hospital hierarchical predictions achieved pooled ROC-AUC 0.8509 and accuracy 77.4%. Sequential coefficient uncertainty decreased, although the final update worsened log loss. Fitted models exceeded the historical probability table on this split, but a clear benefit attributable to medical priors was not established. Historical sampling, missingness, repeated test inspection and an approximate updating procedure limit interpretation. Prospective validation is needed to assess clinical applicability.</p>
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h2><p>Estimating coronary artery disease (CAD) probability requires integrating clinical descriptors with diagnostic evidence. Diamond and Forrester (1979) developed a historical pre-test probability approach based on age, sex and symptoms; Detrano et al. (1989) examined CAD probability modelling across international clinical settings. These studies motivate assessing whether earlier probabilities remain useful in a different study sample.</p>
+<p>This study evaluates angiographic CAD prediction using four processed datasets from the UCI Heart Disease archive (Janosi et al., 1989). Random Forest classification (Breiman, 2001), with Bayesian hyperparameter optimization, is compared with Bayesian logistic regression. The objectives are to assess predictions against recorded diagnoses, evaluate the incorporation of historical probabilities, and examine sequential updating with labelled patient batches. The analysis concerns one diagnostic outcome rather than future cardiovascular events. The data originate from a public research archive; no new patient recruitment or hospital data collection was undertaken.</p>
 <p>Initial execution outputs are retained for provenance. Corrected hospital comparisons are reported separately using the completed analysis in <code>reports/corrected/corrected_results.json</code>. The accompanying report is <code>reports/REPORT.md</code>.</p>
 </div>
 </div>
@@ -13350,9 +13352,9 @@ pre, code { font-family: Consolas, monospace !important; }
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=b4b37aa966bd"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=f763fbc6ea12"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2.-Prior-knowledge-integration">Step 2. Prior knowledge integration<a class="anchor-link" href="#Step-2.-Prior-knowledge-integration">¶</a></h2><p>The Diamond–Forrester table provides historical probabilities by age, sex and chest-pain category. Its 32 entries match the reproduced published table. Clamping ages outside 30–69 affects 35 records and is an assumption. The comparison below shows a large mismatch between the literature table and observed training prevalence. Selection into angiography cohorts is plausible, but its causal role is not established by these records.</p>
+<h2 id="Step-2.-Prior-knowledge-integration">Step 2. Prior knowledge integration<a class="anchor-link" href="#Step-2.-Prior-knowledge-integration">¶</a></h2><p>The Diamond–Forrester table provides historical probabilities by age, sex and chest-pain category (Diamond &amp; Forrester, 1979). Its 32 entries match the table reproduced by Attia et al. (2004). Clamping ages outside 30–69 affects 35 records and is an assumption. The comparison below shows a large mismatch between the literature table and observed training prevalence. Selection into angiography cohorts is plausible, but its causal role is not established by these records.</p>
 </div>
 </div>
 </div>
@@ -13849,9 +13851,9 @@ pre, code { font-family: Consolas, monospace !important; }
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=3d2182f8e364"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=beef4d4801e9"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-3.-Model-development">Step 3. Model development<a class="anchor-link" href="#Step-3.-Model-development">¶</a></h2><h3 id="Bayesian-models">Bayesian models<a class="anchor-link" href="#Bayesian-models">¶</a></h3><p>M0 uses weak priors. M1 adds the literature logit predictor and clinical coefficient priors. M2 adds chest-pain deviations and partially pooled hospital effects. Each uses a Bernoulli likelihood with a logit link. The saved main run uses four chains with 1,000 tuning and 1,000 retained draws per chain. The summaries below describe that original run, not the later corrected fits.</p>
+<h2 id="Step-3.-Model-development">Step 3. Model development<a class="anchor-link" href="#Step-3.-Model-development">¶</a></h2><h3 id="Bayesian-models">Bayesian models<a class="anchor-link" href="#Bayesian-models">¶</a></h3><p>The models use PyMC (Abril-Pla et al., 2023) and NUTS sampling (Hoffman &amp; Gelman, 2014). M0 uses weak priors. M1 adds the literature logit predictor and clinical coefficient priors. M2 adds chest-pain deviations and partially pooled hospital effects. Each uses a Bernoulli likelihood with a logit link. The saved main run uses four chains with 1,000 tuning and 1,000 retained draws per chain. The summaries below describe that original run, not the later corrected fits.</p>
 </div>
 </div>
 </div>
@@ -14396,9 +14398,9 @@ pre, code { font-family: Consolas, monospace !important; }
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=dd1f5f3cf07c"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5df1edf6473a"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Random-Forest-and-Bayesian-optimization">Random Forest and Bayesian optimization<a class="anchor-link" href="#Random-Forest-and-Bayesian-optimization">¶</a></h3><p>The preprocessing pipeline is fitted inside training folds. Optuna TPE searches eight forest settings using five-fold CV log loss, with 50 trials per search method. The original best losses are 0.4169 for TPE and 0.4228 for random search. This single seeded comparison does not establish general search superiority. Hyperparameter optimization is separate from Bayesian updating of disease probabilities.</p>
+<h3 id="Random-Forest-and-Bayesian-optimization">Random Forest and Bayesian optimization<a class="anchor-link" href="#Random-Forest-and-Bayesian-optimization">¶</a></h3><p>The Random Forest (Breiman, 2001) preprocessing pipeline is fitted inside training folds. Optuna (Akiba et al., 2019) implements TPE (Bergstra et al., 2011) to search eight forest settings using five-fold CV log loss, with 50 trials per search method. The original best losses are 0.4169 for TPE and 0.4228 for random search. This single seeded comparison does not establish general search superiority. Hyperparameter optimization is separate from Bayesian updating of disease probabilities.</p>
 </div>
 </div>
 </div>
@@ -14480,9 +14482,9 @@ dtype: float64</pre>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=1d48d81ec2dc"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d628cb7f87eb"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-4.-Validation-against-recorded-diagnoses">Step 4. Validation against recorded diagnoses<a class="anchor-link" href="#Step-4.-Validation-against-recorded-diagnoses">¶</a></h2><p>The following original test results were independently reproduced. The threshold is 0.5, with AUC intervals from 2,000 bootstrap resamples. Original M2 AUC is approximately 0.89945 and accuracy is 84.2%, tied with the default forest. M2 misses 11 positive cases and produces 18 false positives. Repeated inspection of this test set limits claims that it remained untouched throughout development.</p>
+<h2 id="Step-4.-Validation-against-recorded-diagnoses">Step 4. Validation against recorded diagnoses<a class="anchor-link" href="#Step-4.-Validation-against-recorded-diagnoses">¶</a></h2><p>The following original test results were independently reproduced. The threshold is 0.5, with AUC intervals from 2,000 bootstrap resamples. Brier score and log loss evaluate probabilistic forecasts using proper scoring rules (Gneiting &amp; Raftery, 2007). Original M2 AUC is approximately 0.89945 and accuracy is 84.2%, tied with the default forest. M2 misses 11 positive cases and produces 18 false positives. Repeated inspection of this test set limits claims that it remained untouched throughout development.</p>
 </div>
 </div>
 </div>
@@ -15120,9 +15122,9 @@ dtype: float64</pre>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=d18a15ae4c27"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bacfac7b04be"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Completed-corrected-hospital-analysis">Completed corrected hospital analysis<a class="anchor-link" href="#Completed-corrected-hospital-analysis">¶</a></h3><p>Source: <code>reports/corrected/corrected_results.json</code>. The forest is tuned with 50 TPE trials inside each outer training fold. M2 shares each posterior hospital-effect draw across that hospital's patients. All final saved fits have zero divergences; rounded maximum R-hat is at most 1.01, and minimum bulk ESS is at least 1,549. The M2 Hungary fold required a refit at acceptance target 0.99. These retrospective comparisons still require independent prospective validation.</p>
+<h3 id="Completed-corrected-hospital-analysis">Completed corrected hospital analysis<a class="anchor-link" href="#Completed-corrected-hospital-analysis">¶</a></h3><p>Source: <code>reports/corrected/corrected_results.json</code>. The forest is tuned with 50 TPE trials inside each outer training fold, separating selection from evaluation to address selection bias (Cawley &amp; Talbot, 2010). M2 shares each posterior hospital-effect draw across that hospital's patients. All final saved fits have zero divergences; rounded maximum R-hat is at most 1.01, and minimum bulk ESS is at least 1,549. The M2 Hungary fold required a refit at acceptance target 0.99. These retrospective comparisons still require independent prospective validation.</p>
 <table>
 <thead>
 <tr>
@@ -15222,6 +15224,12 @@ dtype: float64</pre>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=936a4b0eb558"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Training-data PSIS-LOO follows the predictive evaluation approach of Vehtari et al. (2017). The companion model's ELPD advantage over M2 is about 3.1, with standard error about 3.0. Its approximately 0.76 stacking weight concerns predictive combination rather than the probability that the model is true (Yao et al., 2018). Preprocessing is fixed in this pointwise comparison.</p>
 </div>
 </div>
 </div>
@@ -15661,18 +15669,9 @@ dtype: float64</pre>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=5022d630598e"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=4a5bfeec06be"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Sources-and-interpretation-limits">Sources and interpretation limits<a class="anchor-link" href="#Sources-and-interpretation-limits">¶</a></h3><p>These are historical angiography records, with substantial missingness and no identifiers for a full patient-overlap audit. Prospective calibration, subgroup reliability, predictor availability and clinical benefit remain unestablished. The report distinguishes original predictions from stricter corrected fits.</p>
-<ul>
-<li>Diamond, G. A., and Forrester, J. S. (1979). Analysis of probability as an aid in the clinical diagnosis of coronary-artery disease. <em>New England Journal of Medicine, 300</em>, 1350–1358. <a href="https://www.nejm.org/doi/abs/10.1056/NEJM197906143002402">Publisher record</a>.</li>
-<li>Attia, J. R., Sibbritt, D. W., Ewald, B. D., et al. (2004). Generating pre-test probabilities: a neglected area in clinical decision making. <em>Medical Journal of Australia, 180</em>, 449–454. <a href="https://www.mja.com.au/journal/2004/180/9/generating-pre-test-probabilities-neglected-area-clinical-decision-making">Published article and reproduced probability table</a>.</li>
-<li>Detrano, R., Jánosi, A., Steinbrunn, W., et al. (1989). International application of a new probability algorithm for the diagnosis of coronary artery disease. <em>American Journal of Cardiology, 64</em>, 304–310. <a href="https://pubmed.ncbi.nlm.nih.gov/2756873/">PubMed record</a>.</li>
-<li>Janosi, A., Steinbrunn, W., Pfisterer, M., and Detrano, R. (1989). Heart Disease [Dataset]. UCI Machine Learning Repository. <a href="https://doi.org/10.24432/C52P4X">Dataset and recommended citation</a>. The donation date is 1988; UCI's recommended citation year is 1989.</li>
-<li>PyMC development team. <a href="https://www.pymc.io/blog/v4_announcement.html">Package rename and model-building API</a>.</li>
-<li>Optuna documentation. <a href="https://optuna.readthedocs.io/en/v3.0.5/reference/samplers/generated/optuna.samplers.TPESampler.html">Tree-structured Parzen Estimator algorithm</a>.</li>
-<li>scikit-learn documentation. <a href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html">Nested and non-nested cross-validation</a>.</li>
-</ul>
+<h3 id="Interpretation-limits">Interpretation limits<a class="anchor-link" href="#Interpretation-limits">¶</a></h3><p>These are historical angiography records, with substantial missingness and no identifiers for a full patient-overlap audit. Prospective calibration, subgroup reliability, predictor availability and clinical benefit remain unestablished. The report distinguishes original predictions from stricter corrected fits.</p>
 <p><strong>Observations</strong></p>
 <ul>
 <li>Original M2 has lower Brier loss: 0.1201 versus M0's 0.1241, but higher binned calibration error, 0.0619 versus 0.0367. Lower loss does not guarantee better calibration.</li>
@@ -15710,6 +15709,24 @@ dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered" id="cell-id=8399ab44f054"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h2><p>Random Forest classification, Bayesian optimization, and Bayesian inference were applied to binary CAD prediction using the UCI Heart Disease datasets. The raw files match the source archive, and the original main results were independently reproduced. Fitted models outperform the historical probability table on this test split, although a clear contribution from medical priors has not been established. Corrected hospital comparisons and approximate sequential updating provide additional evidence of methodological limitations. Independent prospective validation is required before clinical use can be considered.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=84d4e1e4ab61"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2><p>Abril-Pla, O., Andreani, V., Carroll, C., Dong, L., Fonnesbeck, C. J., Kochurov, M., Kumar, R., Lao, J., Luhmann, C. C., Martin, O. A., Osthege, M., Vieira, R., Wiecki, T., &amp; Zinkov, R. (2023). PyMC: A modern, and comprehensive probabilistic programming framework in Python. <em>PeerJ Computer Science, 9</em>, Article e1516. <a href="https://doi.org/10.7717/peerj-cs.1516">https://doi.org/10.7717/peerj-cs.1516</a></p>
+<p>Akiba, T., Sano, S., Yanase, T., Ohta, T., &amp; Koyama, M. (2019). Optuna: A next-generation hyperparameter optimization framework. In <em>Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining</em> (pp. 2623–2631). Association for Computing Machinery. <a href="https://doi.org/10.1145/3292500.3330701">https://doi.org/10.1145/3292500.3330701</a></p>
+<p>Attia, J. R., Sibbritt, D. W., Ewald, B. D., Nair, B. R., Paget, N. S., Wellard, R. F., Patterson, L., &amp; Heller, R. F. (2004). Generating pre-test probabilities: A neglected area in clinical decision making. <em>Medical Journal of Australia, 180</em>(9), 449–454. <a href="https://doi.org/10.5694/j.1326-5377.2004.tb06020.x">https://doi.org/10.5694/j.1326-5377.2004.tb06020.x</a></p>
+<p>Bergstra, J., Bardenet, R., Bengio, Y., &amp; Kégl, B. (2011). Algorithms for hyper-parameter optimization. In J. Shawe-Taylor, R. Zemel, P. Bartlett, F. Pereira, &amp; K. Weinberger (Eds.), <em>Advances in neural information processing systems</em> (Vol. 24, pp. 2546–2554). Curran Associates. <a href="https://papers.nips.cc/paper_files/paper/2011/hash/86e8f7ab32cfd12577bc2619bc635690-Abstract.html">https://papers.nips.cc/paper_files/paper/2011/hash/86e8f7ab32cfd12577bc2619bc635690-Abstract.html</a></p>
+<p>Breiman, L. (2001). Random forests. <em>Machine Learning, 45</em>(1), 5–32. <a href="https://doi.org/10.1023/A:1010933404324">https://doi.org/10.1023/A:1010933404324</a></p>
+<p>Cawley, G. C., &amp; Talbot, N. L. C. (2010). On over-fitting in model selection and subsequent selection bias in performance evaluation. <em>Journal of Machine Learning Research, 11</em>(70), 2079–2107. <a href="https://jmlr.org/papers/v11/cawley10a.html">https://jmlr.org/papers/v11/cawley10a.html</a></p>
+<p>Detrano, R., Janosi, A., Steinbrunn, W., Pfisterer, M., Schmid, J. J., Sandhu, S., Guppy, K. H., Lee, S., &amp; Froelicher, V. (1989). International application of a new probability algorithm for the diagnosis of coronary artery disease. <em>American Journal of Cardiology, 64</em>(5), 304–310. <a href="https://doi.org/10.1016/0002-9149(89)90524-9">https://doi.org/10.1016/0002-9149(89)90524-9</a></p>
+<p>Diamond, G. A., &amp; Forrester, J. S. (1979). Analysis of probability as an aid in the clinical diagnosis of coronary-artery disease. <em>New England Journal of Medicine, 300</em>(24), 1350–1358. <a href="https://doi.org/10.1056/NEJM197906143002402">https://doi.org/10.1056/NEJM197906143002402</a></p>
+<p>Gneiting, T., &amp; Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. <em>Journal of the American Statistical Association, 102</em>(477), 359–378. <a href="https://doi.org/10.1198/016214506000001437">https://doi.org/10.1198/016214506000001437</a></p>
+<p>Hoffman, M. D., &amp; Gelman, A. (2014). The No-U-Turn sampler: Adaptively setting path lengths in Hamiltonian Monte Carlo. <em>Journal of Machine Learning Research, 15</em>(47), 1593–1623. <a href="https://jmlr.org/papers/v15/hoffman14a.html">https://jmlr.org/papers/v15/hoffman14a.html</a></p>
+<p>Janosi, A., Steinbrunn, W., Pfisterer, M., &amp; Detrano, R. (1989). <em>Heart disease</em> [Data set]. UCI Machine Learning Repository. <a href="https://doi.org/10.24432/C52P4X">https://doi.org/10.24432/C52P4X</a></p>
+<p>Vehtari, A., Gelman, A., &amp; Gabry, J. (2017). Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC. <em>Statistics and Computing, 27</em>(5), 1413–1432. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a></p>
+<p>Yao, Y., Vehtari, A., Simpson, D., &amp; Gelman, A. (2018). Using stacking to average Bayesian predictive distributions (with discussion). <em>Bayesian Analysis, 13</em>(3), 917–1007. <a href="https://doi.org/10.1214/17-BA1091">https://doi.org/10.1214/17-BA1091</a></p>
 </div>
 </div>
 </div>

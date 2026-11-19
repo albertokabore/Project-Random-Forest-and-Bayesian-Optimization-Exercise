@@ -1,0 +1,89 @@
+{
+  "checked_on": "2026-11-18",
+  "style": "APA 7 author-date citations and alphabetical reference list",
+  "reference_count": 13,
+  "scope": "Bibliographic metadata and relevance checked against the linked records; this does not independently verify source clinical measurements or certify every claim in every full text.",
+  "references": [
+    {
+      "key": "Abril-Pla et al., 2023",
+      "apa": "Abril-Pla, O., Andreani, V., Carroll, C., Dong, L., Fonnesbeck, C. J., Kochurov, M., Kumar, R., Lao, J., Luhmann, C. C., Martin, O. A., Osthege, M., Vieira, R., Wiecki, T., & Zinkov, R. (2023). PyMC: A modern, and comprehensive probabilistic programming framework in Python. *PeerJ Computer Science, 9*, Article e1516. https://doi.org/10.7717/peerj-cs.1516",
+      "verified_record": "https://pubmed.ncbi.nlm.nih.gov/37705656/",
+      "supports": "PyMC probabilistic programming framework and Bayesian model implementation."
+    },
+    {
+      "key": "Akiba et al., 2019",
+      "apa": "Akiba, T., Sano, S., Yanase, T., Ohta, T., & Koyama, M. (2019). Optuna: A next-generation hyperparameter optimization framework. In *Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining* (pp. 2623–2631). Association for Computing Machinery. https://doi.org/10.1145/3292500.3330701",
+      "verified_record": "https://raw.githubusercontent.com/optuna/optuna/master/CITATION.cff",
+      "supports": "Optuna optimization framework; author-maintained citation includes DOI and pages."
+    },
+    {
+      "key": "Attia et al., 2004",
+      "apa": "Attia, J. R., Sibbritt, D. W., Ewald, B. D., Nair, B. R., Paget, N. S., Wellard, R. F., Patterson, L., & Heller, R. F. (2004). Generating pre-test probabilities: A neglected area in clinical decision making. *Medical Journal of Australia, 180*(9), 449–454. https://doi.org/10.5694/j.1326-5377.2004.tb06020.x",
+      "verified_record": "https://www.mja.com.au/journal/2004/180/9/generating-pre-test-probabilities-neglected-area-clinical-decision-making",
+      "supports": "Reproduced historical pre-test probability table used to check the 32 encoded entries."
+    },
+    {
+      "key": "Bergstra et al., 2011",
+      "apa": "Bergstra, J., Bardenet, R., Bengio, Y., & Kégl, B. (2011). Algorithms for hyper-parameter optimization. In J. Shawe-Taylor, R. Zemel, P. Bartlett, F. Pereira, & K. Weinberger (Eds.), *Advances in neural information processing systems* (Vol. 24, pp. 2546–2554). Curran Associates. https://papers.nips.cc/paper_files/paper/2011/hash/86e8f7ab32cfd12577bc2619bc635690-Abstract.html",
+      "verified_record": "https://papers.nips.cc/paper_files/paper/2011/file/86e8f7ab32cfd12577bc2619bc635690-Metadata.json",
+      "additional_record": "https://papers.nips.cc/paper_files/paper/2011",
+      "supports": "Tree-structured Parzen estimator methodology; proceedings record confirms the editors."
+    },
+    {
+      "key": "Breiman, 2001",
+      "apa": "Breiman, L. (2001). Random forests. *Machine Learning, 45*(1), 5–32. https://doi.org/10.1023/A:1010933404324",
+      "verified_record": "https://link.springer.com/article/10.1023/A:1010933404324",
+      "supports": "Random Forest ensemble methodology."
+    },
+    {
+      "key": "Cawley & Talbot, 2010",
+      "apa": "Cawley, G. C., & Talbot, N. L. C. (2010). On over-fitting in model selection and subsequent selection bias in performance evaluation. *Journal of Machine Learning Research, 11*(70), 2079–2107. https://jmlr.org/papers/v11/cawley10a.html",
+      "verified_record": "https://jmlr.org/papers/v11/cawley10a.html",
+      "supports": "Separating model selection from outer-fold performance evaluation."
+    },
+    {
+      "key": "Detrano et al., 1989",
+      "apa": "Detrano, R., Janosi, A., Steinbrunn, W., Pfisterer, M., Schmid, J. J., Sandhu, S., Guppy, K. H., Lee, S., & Froelicher, V. (1989). International application of a new probability algorithm for the diagnosis of coronary artery disease. *American Journal of Cardiology, 64*(5), 304–310. https://doi.org/10.1016/0002-9149(89)90524-9",
+      "verified_record": "https://pubmed.ncbi.nlm.nih.gov/2756873/",
+      "supports": "Historical multicentre CAD probability modelling context; not the source of this project's pooled record count."
+    },
+    {
+      "key": "Diamond & Forrester, 1979",
+      "apa": "Diamond, G. A., & Forrester, J. S. (1979). Analysis of probability as an aid in the clinical diagnosis of coronary-artery disease. *New England Journal of Medicine, 300*(24), 1350–1358. https://doi.org/10.1056/NEJM197906143002402",
+      "verified_record": "https://pubmed.ncbi.nlm.nih.gov/440357/",
+      "supports": "Historical pre-test probability approach. Metadata and abstract verified; numerical table checked through Attia et al. (2004), not an independently accessed 1979 full text."
+    },
+    {
+      "key": "Gneiting & Raftery, 2007",
+      "apa": "Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. *Journal of the American Statistical Association, 102*(477), 359–378. https://doi.org/10.1198/016214506000001437",
+      "verified_record": "https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf",
+      "supports": "Proper scoring rules for evaluating probabilistic predictions, including quadratic and logarithmic scores."
+    },
+    {
+      "key": "Hoffman & Gelman, 2014",
+      "apa": "Hoffman, M. D., & Gelman, A. (2014). The No-U-Turn sampler: Adaptively setting path lengths in Hamiltonian Monte Carlo. *Journal of Machine Learning Research, 15*(47), 1593–1623. https://jmlr.org/papers/v15/hoffman14a.html",
+      "verified_record": "https://jmlr.org/papers/v15/hoffman14a.html",
+      "supports": "NUTS posterior sampling algorithm."
+    },
+    {
+      "key": "Janosi et al., 1989",
+      "apa": "Janosi, A., Steinbrunn, W., Pfisterer, M., & Detrano, R. (1989). *Heart disease* [Data set]. UCI Machine Learning Repository. https://doi.org/10.24432/C52P4X",
+      "verified_record": "https://archive.ics.uci.edu/dataset/45/heart+disease",
+      "supports": "Dataset provenance and variable definitions. Year follows UCI's recommended citation (1989); donation date is 1988."
+    },
+    {
+      "key": "Vehtari et al., 2017",
+      "apa": "Vehtari, A., Gelman, A., & Gabry, J. (2017). Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC. *Statistics and Computing, 27*(5), 1413–1432. https://doi.org/10.1007/s11222-016-9696-4",
+      "verified_record": "https://link.springer.com/article/10.1007/s11222-016-9696-4",
+      "supports": "PSIS-LOO predictive evaluation. The journal issue year is 2017, despite online publication in 2016."
+    },
+    {
+      "key": "Yao et al., 2018",
+      "apa": "Yao, Y., Vehtari, A., Simpson, D., & Gelman, A. (2018). Using stacking to average Bayesian predictive distributions (with discussion). *Bayesian Analysis, 13*(3), 917–1007. https://doi.org/10.1214/17-BA1091",
+      "verified_record": "https://mc-stan.org/loo/authors.html",
+      "additional_record": "https://sites.stat.columbia.edu/gelman/research/published/stacking.pdf",
+      "supports": "Stacking combines predictive distributions; weights are not posterior model probabilities.",
+      "verification_note": "The authors' maintained loo citation record confirms all four authors, year, volume, issue, pages 917–1007 and DOI. Some institutional catalogue entries instead give 917–1003; the authors' citation is used."
+    }
+  ]
+}

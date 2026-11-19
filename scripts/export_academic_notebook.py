@@ -34,6 +34,7 @@ table { border-collapse: collapse !important; }
 th, td { border: 1px solid #000000 !important; padding: 5px 7px !important; }
 a, a:visited, a:hover, a:active { color: #000000 !important; }
 pre, code { font-family: Consolas, monospace !important; }
+#References ~ p { padding-left: 0.5in; text-indent: -0.5in; line-height: 2; }
 @media print {
   body, #notebook-container { background: #ffffff !important; box-shadow: none !important; }
   h1, h2, h3, h4, .output_png { break-inside: avoid; }

@@ -7,8 +7,10 @@ No model fitting, numerical-output edits or watermark elements are introduced.
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import re
+import zipfile
 from pathlib import Path
 
 from docx import Document
@@ -17,13 +19,14 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Inches, Pt, RGBColor
+from lxml import etree
 
 from submission_content import AUTHOR, QUALIFICATION
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "reports/REPORT.md"
 OUTPUT = ROOT / "reports/Medical_Diagnosis_System_Verified_Report.docx"
-PERSONALIZED_OUTPUT = ROOT / "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx"
+PERSONALIZED_OUTPUT = ROOT / "reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA.docx"
 BLACK = "000000"
 WHITE = "FFFFFF"
 INLINE = re.compile(r"(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*|https?://[^\s]+)")
@@ -80,6 +83,28 @@ def shade(cell, fill: str) -> None:
     cell._tc.get_or_add_tcPr().append(element)
 
 
+def monochrome_package(payload: bytes) -> bytes:
+    """Include auxiliary Word style parts that python-docx does not expose."""
+    output = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(payload)) as source, zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as target:
+        for member in source.infolist():
+            data = source.read(member.filename)
+            if member.filename.startswith("word/") and member.filename.endswith(".xml"):
+                root = etree.fromstring(data)
+                for color in root.iter(qn("w:color")):
+                    color.set(qn("w:val"), BLACK)
+                    for name in ("themeColor", "themeTint", "themeShade"):
+                        color.attrib.pop(qn("w:" + name), None)
+                for fill in root.iter(qn("w:shd")):
+                    fill.set(qn("w:fill"), WHITE)
+                    fill.set(qn("w:color"), BLACK)
+                    for name in ("themeFill", "themeFillTint", "themeFillShade", "themeColor", "themeTint", "themeShade"):
+                        fill.attrib.pop(qn("w:" + name), None)
+                data = etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone=True)
+            target.writestr(member, data)
+    return output.getvalue()
+
+
 class WordReport:
     def __init__(self) -> None:
         self.doc = Document()
@@ -89,34 +114,47 @@ class WordReport:
         section.page_width, section.page_height = Inches(8.5), Inches(11)
         section.top_margin = section.bottom_margin = Inches(1)
         section.left_margin = section.right_margin = Inches(1)
-        section.different_first_page_header_footer = True
+        section.different_first_page_header_footer = False
+        section.header_distance = Inches(0.5)
         styles = self.doc.styles
         for name in ("Normal", "Body Text", "List Paragraph", "List Bullet", "Caption", "Subtitle"):
             styles[name].font.name = "Times New Roman"
-            styles[name].font.size = Pt(12 if name != "Caption" else 10)
+            styles[name].font.size = Pt(12)
             styles[name].font.color.rgb = RGBColor.from_string(BLACK)
         normal = styles["Normal"].paragraph_format
-        normal.line_spacing = 1.12
-        normal.space_after = Pt(6)
+        normal.line_spacing = 2
+        normal.space_before = normal.space_after = Pt(0)
+        normal.first_line_indent = Inches(0.5)
         normal.widow_control = True
-        for name, size in (("Title", 20), ("Heading 1", 14), ("Heading 2", 12), ("Heading 3", 12)):
+        for name in ("List Bullet", "List Paragraph"):
+            styles[name].paragraph_format.left_indent = Inches(0.5)
+            styles[name].paragraph_format.first_line_indent = Inches(-0.25)
+        for name, size in (("Title", 12), ("Heading 1", 12), ("Heading 2", 12), ("Heading 3", 12)):
             style = styles[name]
             style.font.name = "Times New Roman"
             style.font.size = Pt(size)
             style.font.color.rgb = RGBColor.from_string(BLACK)
+            style.font.bold = True
+            style.font.italic = name == "Heading 3"
+            style.paragraph_format.first_line_indent = Inches(0)
+            style.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER if name in ("Title", "Heading 1") else WD_ALIGN_PARAGRAPH.LEFT
             style.paragraph_format.keep_with_next = True
-            style.paragraph_format.space_before = Pt(14)
-            style.paragraph_format.space_after = Pt(6)
+            style.paragraph_format.space_before = style.paragraph_format.space_after = Pt(0)
+            style.paragraph_format.line_spacing = 2
         styles["Caption"].font.color.rgb = RGBColor.from_string(BLACK)
+        styles["Caption"].font.italic = False
+        styles["Caption"].paragraph_format.first_line_indent = Inches(0)
         header = section.header.paragraphs[0]
-        header.text = "Medical Diagnosis System | Random Forest and Bayesian Optimization"
-        header.runs[0].font.size = Pt(8)
-        footer = section.footer.paragraphs[0]
-        footer.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        footer.add_run("Page ")
+        header.paragraph_format.first_line_indent = Inches(0)
+        header.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         field = OxmlElement("w:fldSimple")
         field.set(qn("w:instr"), "PAGE")
-        footer._p.append(field)
+        field_run = OxmlElement("w:r")
+        field_text = OxmlElement("w:t")
+        field_text.text = "1"
+        field_run.append(field_text)
+        field.append(field_run)
+        header._p.append(field)
         props = self.doc.core_properties
         props.title = "Medical Diagnosis System: Random Forest and Bayesian Optimization"
         props.subject = "Process, findings, predictive accuracy and methodological limitations"
@@ -130,25 +168,35 @@ class WordReport:
         rich(paragraph, text)
         if text == "**Observations**":
             paragraph.paragraph_format.keep_with_next = True
+            paragraph.paragraph_format.first_line_indent = Inches(0)
         return paragraph
 
-    def caption(self, text: str) -> None:
-        paragraph = self.paragraph(text, "Caption")
-        paragraph.paragraph_format.keep_with_next = True
+    def caption(self, label: str, title: str) -> None:
+        for text in (f"**{label}**", f"*{title.rstrip('.')}*"):
+            paragraph = self.paragraph(text, "Caption")
+            paragraph.paragraph_format.keep_with_next = True
+
+    def reference(self, text: str) -> None:
+        paragraph = self.paragraph(text)
+        paragraph.paragraph_format.left_indent = Inches(0.5)
+        paragraph.paragraph_format.first_line_indent = Inches(-0.5)
+        paragraph.paragraph_format.line_spacing = 2
+        paragraph.paragraph_format.keep_with_next = False
+        paragraph.paragraph_format.keep_together = True
 
     def table(self, rows: list[list[str]], caption: str, widths: list[float] | None = None) -> None:
         self.table_number += 1
-        self.caption(f"Table {self.table_number}. {caption}")
+        self.caption(f"Table {self.table_number}", caption)
         count = len(rows[0])
         widths = widths or ([2.2] + [(6.5 - 2.2) / (count - 1)] * (count - 1))
         table = self.doc.add_table(rows=0, cols=count)
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
-        table.style = "Table Grid"
+        table.style = "Normal Table"
         table.autofit = False
         borders = OxmlElement("w:tblBorders")
         for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
             border = OxmlElement(f"w:{edge}")
-            border.set(qn("w:val"), "single")
+            border.set(qn("w:val"), "single" if edge in ("top", "bottom") else "nil")
             border.set(qn("w:sz"), "4")
             border.set(qn("w:color"), BLACK)
             borders.append(border)
@@ -169,6 +217,7 @@ class WordReport:
                 paragraph.paragraph_format.space_after = Pt(4)
                 paragraph.paragraph_format.space_before = Pt(3)
                 paragraph.paragraph_format.line_spacing = 1.03
+                paragraph.paragraph_format.first_line_indent = Inches(0)
                 rich(paragraph, value)
                 for run in paragraph.runs:
                     run.font.size = Pt(10)
@@ -176,6 +225,14 @@ class WordReport:
                     if row_index == 0:
                         run.bold = True
                 shade(cell, WHITE)
+                if row_index == 0:
+                    cell_borders = OxmlElement("w:tcBorders")
+                    bottom = OxmlElement("w:bottom")
+                    bottom.set(qn("w:val"), "single")
+                    bottom.set(qn("w:sz"), "4")
+                    bottom.set(qn("w:color"), BLACK)
+                    cell_borders.append(bottom)
+                    cell._tc.get_or_add_tcPr().append(cell_borders)
         self.doc.add_paragraph().paragraph_format.space_after = Pt(2)
 
     def markdown_table(self, rows: list[list[str]]) -> None:
@@ -213,9 +270,10 @@ class WordReport:
 
     def figure(self, filename: str, caption: str) -> None:
         self.figure_number += 1
-        self.caption(f"Figure {self.figure_number}. {caption}")
+        self.caption(f"Figure {self.figure_number}", caption)
         paragraph = self.doc.add_paragraph()
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        paragraph.paragraph_format.first_line_indent = Inches(0)
         run = paragraph.add_run()
         run.add_picture(str(ROOT / "reports/figures" / filename), width=Inches(6.45))
         image = run._r.xpath(".//wp:docPr")[0]
@@ -248,6 +306,7 @@ class WordReport:
     def body(self, source: str) -> None:
         lines = source.splitlines()
         index = 0
+        section_name = ""
         while index < len(lines):
             line = lines[index].strip()
             if not line or line == "---":
@@ -258,7 +317,16 @@ class WordReport:
                 continue
             if line.startswith("##"):
                 level = len(line) - len(line.lstrip("#")) - 1
-                self.doc.add_heading(line.lstrip("# "), level=min(level, 3))
+                title = line.lstrip("# ")
+                if level == 1:
+                    section_name = title
+                    if title in ("Introduction", "References"):
+                        self.doc.add_page_break()
+                self.doc.add_heading(title, level=min(level, 3))
+                index += 1
+                continue
+            if not section_name:
+                # Author details are already on the title page.
                 index += 1
                 continue
             if line.startswith("```"):
@@ -268,6 +336,7 @@ class WordReport:
                     block.append(lines[index])
                     index += 1
                 paragraph = self.doc.add_paragraph()
+                paragraph.paragraph_format.first_line_indent = Inches(0)
                 run = paragraph.add_run("\n".join(block))
                 run.font.name, run.font.size = "Consolas", Pt(9)
                 index += 1
@@ -298,7 +367,12 @@ class WordReport:
                 text += " " + nxt
                 index += 1
             style = "List Bullet" if bullet else "List Paragraph" if numbered else None
+            if section_name == "References":
+                self.reference(text)
+                continue
             paragraph = self.paragraph(text, style)
+            if section_name == "Abstract" and not text.startswith("*Keywords:"):
+                paragraph.paragraph_format.first_line_indent = Inches(0)
             if numbered:
                 paragraph.paragraph_format.left_indent = Inches(0.25)
                 paragraph.paragraph_format.first_line_indent = Inches(-0.25)
@@ -307,35 +381,36 @@ class WordReport:
 def main() -> None:
     report = WordReport()
     doc = report.doc
-    doc.add_paragraph("Medical Diagnosis System", "Title")
-    doc.add_paragraph("Random Forest and Bayesian Optimization Exercise", "Subtitle")
-    report.paragraph("Process, findings and predictive accuracy")
-    report.paragraph(f"**{AUTHOR}**")
-    report.paragraph(QUALIFICATION)
-    report.paragraph("November 18, 2026")
-    doc.add_paragraph()
-    report.paragraph("Research report on data collection, prior specification, model development, validation, sequential updating, and predictive accuracy.")
+    title = doc.add_paragraph("Medical Diagnosis System: Random Forest and Bayesian Optimization", "Title")
+    title.paragraph_format.space_before = Pt(72)
+    title.paragraph_format.space_after = Pt(12)
+    for text in (AUTHOR, QUALIFICATION, "November 18, 2026"):
+        paragraph = report.paragraph(text)
+        paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        paragraph.paragraph_format.first_line_indent = Inches(0)
     doc.add_page_break()
     source = SOURCE.read_text(encoding="utf-8")
     report.body(source)
     report.enforce_black_text()
-    doc.save(OUTPUT)
+    buffer = io.BytesIO()
+    doc.save(buffer)
+    OUTPUT.write_bytes(monochrome_package(buffer.getvalue()))
     # Update previous filenames when they are not locked by an open Word window.
     payload = OUTPUT.read_bytes()
     actual_output = PERSONALIZED_OUTPUT
     try:
         actual_output.write_bytes(payload)
     except PermissionError:
-        actual_output = ROOT / "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx"
+        actual_output = ROOT / "reports/Albert_Kabore_Medical_Diagnosis_System_Report_APA_Updated.docx"
         actual_output.write_bytes(payload)
-        print("The earlier academic file could not be replaced; a results-analysis edition was saved.")
+        print("The earlier APA file could not be replaced; an updated APA edition was saved.")
     for filename in ("Albert_Kabore_Medical_Diagnosis_System_Report.docx", "Medical_Diagnosis_System_Report.docx"):
         try:
             (ROOT / "reports" / filename).write_bytes(payload)
         except PermissionError:
             print(f"Could not replace {filename}; the academic edition is saved separately.")
     manifest = {
-        "edition": "Author revision with original and completed corrected analyses",
+        "edition": "Academic report with APA author-date citations and references after the conclusion",
         "author": AUTHOR,
         "academic_status": QUALIFICATION,
         "date": "2026-11-18",
@@ -347,6 +422,9 @@ def main() -> None:
         "figures": report.figure_number,
         "text_colour": BLACK,
         "table_fill": WHITE,
+        "body_line_spacing": 2,
+        "reference_hanging_indent_inches": 0.5,
+        "references_follow_conclusion": True,
     }
     OUTPUT.with_suffix(".manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(actual_output)

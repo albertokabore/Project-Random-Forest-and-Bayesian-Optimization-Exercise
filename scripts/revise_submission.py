@@ -8,6 +8,7 @@ from pathlib import Path
 
 import nbformat
 
+from academic_references import verification_manifest
 from submission_content import AUTHOR, OBSERVATIONS, OUTPUT_ANALYSIS_TRACE, QUALIFICATION, ROOT, build_markdown, revise_notebook
 
 
@@ -34,7 +35,8 @@ def main() -> None:
     nbformat.validate(notebook)
     report = build_markdown()
     assert report.count("**Observations**") == 6
-    assert report.split("\n## ")[-1].startswith("Conclusion\n")
+    assert report.split("\n## ")[-2].startswith("Conclusion\n")
+    assert report.split("\n## ")[-1].startswith("References\n")
     (ROOT / "reports/REPORT.md").write_text(report, encoding="utf-8")
     nbformat.write(notebook, path)
     saved = nbformat.read(path, as_version=4)
@@ -52,6 +54,7 @@ def main() -> None:
     }
     (ROOT / "reports/submission_revision.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     (ROOT / "reports/output_analysis_trace.json").write_text(json.dumps(OUTPUT_ANALYSIS_TRACE, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "reports/reference_verification.json").write_text(json.dumps(verification_manifest(), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print("Updated REPORT.md and notebook markdown for", AUTHOR)
     print("Six observation blocks: exactly 50 words each. All 20 code cells and saved outputs preserved.")
     print("Original and corrected numerical evidence files unchanged.")
