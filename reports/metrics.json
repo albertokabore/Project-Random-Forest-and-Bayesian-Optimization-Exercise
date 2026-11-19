@@ -1,0 +1,806 @@
+{
+  "sites": [
+    {
+      "site": "Cleveland",
+      "patients": 303.0,
+      "disease_rate": 0.45874587458745875
+    },
+    {
+      "site": "Hungary",
+      "patients": 294.0,
+      "disease_rate": 0.36054421768707484
+    },
+    {
+      "site": "Switzerland",
+      "patients": 123.0,
+      "disease_rate": 0.9349593495934959
+    },
+    {
+      "site": "VA Long Beach",
+      "patients": 200.0,
+      "disease_rate": 0.745
+    },
+    {
+      "site": "All",
+      "patients": 920.0,
+      "disease_rate": 0.5532608695652174
+    }
+  ],
+  "split": {
+    "train": 736,
+    "test": 184,
+    "test_disease_rate": 0.5543478260869565
+  },
+  "prior_vs_observed_cp": [
+    {
+      "chest_pain": "Typical angina",
+      "Observed (training data)": 0.417,
+      "Literature pre-test (mean)": 0.867
+    },
+    {
+      "chest_pain": "Atypical angina",
+      "Observed (training data)": 0.129,
+      "Literature pre-test (mean)": 0.403
+    },
+    {
+      "chest_pain": "Non-anginal",
+      "Observed (training data)": 0.37,
+      "Literature pre-test (mean)": 0.173
+    },
+    {
+      "chest_pain": "Asymptomatic",
+      "Observed (training data)": 0.792,
+      "Literature pre-test (mean)": 0.087
+    }
+  ],
+  "prevalence_updating": [
+    {
+      "site": "Cleveland",
+      "prior_mean": 0.226,
+      "posterior_mean": 0.449,
+      "post_95_low": 0.389,
+      "post_95_high": 0.511,
+      "test_prevalence": 0.459,
+      "test_in_95_interval": true
+    },
+    {
+      "site": "Hungary",
+      "prior_mean": 0.207,
+      "posterior_mean": 0.354,
+      "post_95_low": 0.295,
+      "post_95_high": 0.415,
+      "test_prevalence": 0.362,
+      "test_in_95_interval": true
+    },
+    {
+      "site": "Switzerland",
+      "prior_mean": 0.144,
+      "posterior_mean": 0.865,
+      "post_95_low": 0.795,
+      "post_95_high": 0.923,
+      "test_prevalence": 0.92,
+      "test_in_95_interval": true
+    },
+    {
+      "site": "VA Long Beach",
+      "prior_mean": 0.205,
+      "posterior_mean": 0.712,
+      "post_95_low": 0.642,
+      "post_95_high": 0.777,
+      "test_prevalence": 0.75,
+      "test_in_95_interval": true
+    }
+  ],
+  "convergence": [
+    {
+      "model": "M0_weak",
+      "max_rhat": 1.0,
+      "min_ess_bulk": 3162.0,
+      "divergences": 0.0
+    },
+    {
+      "model": "M1_literature",
+      "max_rhat": 1.0,
+      "min_ess_bulk": 3840.0,
+      "divergences": 0.0
+    },
+    {
+      "model": "M2_refined",
+      "max_rhat": 1.0,
+      "min_ess_bulk": 2647.0,
+      "divergences": 0.0
+    }
+  ],
+  "loo": [
+    {
+      "model": "M2_refined",
+      "rank": 0,
+      "elpd_loo": -287.94,
+      "p_loo": 23.61,
+      "elpd_diff": 0.0,
+      "dse": 0.0,
+      "weight": 0.59
+    },
+    {
+      "model": "M0_weak",
+      "rank": 1,
+      "elpd_loo": -289.56,
+      "p_loo": 24.28,
+      "elpd_diff": 1.61,
+      "dse": 4.3,
+      "weight": 0.41
+    },
+    {
+      "model": "M1_literature",
+      "rank": 2,
+      "elpd_loo": -317.91,
+      "p_loo": 18.79,
+      "elpd_diff": 29.96,
+      "dse": 7.8,
+      "weight": 0.0
+    }
+  ],
+  "m2_hyperparameters": [
+    {
+      "param": "intercept",
+      "mean": -1.529,
+      "sd": 0.889,
+      "hdi_3%": -3.212,
+      "hdi_97%": 0.124
+    },
+    {
+      "param": "gamma",
+      "mean": 0.379,
+      "sd": 0.137,
+      "hdi_3%": 0.136,
+      "hdi_97%": 0.64
+    },
+    {
+      "param": "site_effect[Cleveland]",
+      "mean": -1.225,
+      "sd": 0.853,
+      "hdi_3%": -2.803,
+      "hdi_97%": 0.289
+    },
+    {
+      "param": "site_effect[Hungary]",
+      "mean": -0.974,
+      "sd": 0.738,
+      "hdi_3%": -2.369,
+      "hdi_97%": 0.369
+    },
+    {
+      "param": "site_effect[Switzerland]",
+      "mean": 1.387,
+      "sd": 0.825,
+      "hdi_3%": -0.054,
+      "hdi_97%": 3.022
+    },
+    {
+      "param": "site_effect[VA Long Beach]",
+      "mean": -0.286,
+      "sd": 0.721,
+      "hdi_3%": -1.695,
+      "hdi_97%": 1.039
+    },
+    {
+      "param": "tau_site",
+      "mean": 1.24,
+      "sd": 0.487,
+      "hdi_3%": 0.431,
+      "hdi_97%": 2.193
+    },
+    {
+      "param": "tau_dev",
+      "mean": 1.514,
+      "sd": 0.484,
+      "hdi_3%": 0.683,
+      "hdi_97%": 2.41
+    }
+  ],
+  "m2_coefficients": [
+    {
+      "feature": "trestbps",
+      "mean": 0.13,
+      "sd": 0.118,
+      "hdi_3%": -0.081,
+      "hdi_97%": 0.36
+    },
+    {
+      "feature": "chol",
+      "mean": 0.16,
+      "sd": 0.104,
+      "hdi_3%": -0.03,
+      "hdi_97%": 0.36
+    },
+    {
+      "feature": "thalach",
+      "mean": -0.222,
+      "sd": 0.137,
+      "hdi_3%": -0.465,
+      "hdi_97%": 0.054
+    },
+    {
+      "feature": "oldpeak",
+      "mean": 0.367,
+      "sd": 0.157,
+      "hdi_3%": 0.058,
+      "hdi_97%": 0.649
+    },
+    {
+      "feature": "ca",
+      "mean": 0.683,
+      "sd": 0.155,
+      "hdi_3%": 0.402,
+      "hdi_97%": 0.977
+    },
+    {
+      "feature": "fbs",
+      "mean": 0.282,
+      "sd": 0.281,
+      "hdi_3%": -0.245,
+      "hdi_97%": 0.801
+    },
+    {
+      "feature": "exang",
+      "mean": 0.918,
+      "sd": 0.24,
+      "hdi_3%": 0.46,
+      "hdi_97%": 1.368
+    },
+    {
+      "feature": "cp_2",
+      "mean": -0.464,
+      "sd": 0.51,
+      "hdi_3%": -1.415,
+      "hdi_97%": 0.476
+    },
+    {
+      "feature": "cp_3",
+      "mean": 0.937,
+      "sd": 0.631,
+      "hdi_3%": -0.173,
+      "hdi_97%": 2.172
+    },
+    {
+      "feature": "cp_4",
+      "mean": 2.634,
+      "sd": 0.742,
+      "hdi_3%": 1.253,
+      "hdi_97%": 4.006
+    },
+    {
+      "feature": "restecg_1",
+      "mean": -0.021,
+      "sd": 0.263,
+      "hdi_3%": -0.525,
+      "hdi_97%": 0.455
+    },
+    {
+      "feature": "restecg_2",
+      "mean": 0.247,
+      "sd": 0.268,
+      "hdi_3%": -0.26,
+      "hdi_97%": 0.766
+    },
+    {
+      "feature": "slope_2",
+      "mean": 0.782,
+      "sd": 0.275,
+      "hdi_3%": 0.264,
+      "hdi_97%": 1.273
+    },
+    {
+      "feature": "slope_3",
+      "mean": 0.115,
+      "sd": 0.372,
+      "hdi_3%": -0.554,
+      "hdi_97%": 0.842
+    },
+    {
+      "feature": "thal_6",
+      "mean": 0.77,
+      "sd": 0.38,
+      "hdi_3%": 0.073,
+      "hdi_97%": 1.501
+    },
+    {
+      "feature": "thal_7",
+      "mean": 1.267,
+      "sd": 0.295,
+      "hdi_3%": 0.722,
+      "hdi_97%": 1.815
+    },
+    {
+      "feature": "trestbps_missing",
+      "mean": 0.59,
+      "sd": 0.76,
+      "hdi_3%": -0.833,
+      "hdi_97%": 1.991
+    },
+    {
+      "feature": "chol_missing",
+      "mean": 0.085,
+      "sd": 0.398,
+      "hdi_3%": -0.651,
+      "hdi_97%": 0.824
+    },
+    {
+      "feature": "thalach_missing",
+      "mean": 0.061,
+      "sd": 0.844,
+      "hdi_3%": -1.55,
+      "hdi_97%": 1.639
+    },
+    {
+      "feature": "oldpeak_missing",
+      "mean": 0.176,
+      "sd": 0.714,
+      "hdi_3%": -1.146,
+      "hdi_97%": 1.555
+    },
+    {
+      "feature": "ca_missing",
+      "mean": 0.633,
+      "sd": 0.671,
+      "hdi_3%": -0.647,
+      "hdi_97%": 1.865
+    },
+    {
+      "feature": "fbs_missing",
+      "mean": 0.098,
+      "sd": 0.541,
+      "hdi_3%": -0.973,
+      "hdi_97%": 1.038
+    },
+    {
+      "feature": "exang_missing",
+      "mean": 0.045,
+      "sd": 0.837,
+      "hdi_3%": -1.633,
+      "hdi_97%": 1.547
+    },
+    {
+      "feature": "restecg_missing",
+      "mean": 0.703,
+      "sd": 0.881,
+      "hdi_3%": -0.985,
+      "hdi_97%": 2.311
+    },
+    {
+      "feature": "slope_missing",
+      "mean": -0.247,
+      "sd": 0.378,
+      "hdi_3%": -0.962,
+      "hdi_97%": 0.449
+    },
+    {
+      "feature": "thal_missing",
+      "mean": 0.482,
+      "sd": 0.388,
+      "hdi_3%": -0.263,
+      "hdi_97%": 1.187
+    }
+  ],
+  "rf_search": {
+    "bo_best_cv_log_loss": 0.41693899930074235,
+    "random_best_cv_log_loss": 0.4228316154040356,
+    "bo_best_params": {
+      "n_estimators": 250,
+      "max_depth": 20,
+      "min_samples_split": 6,
+      "min_samples_leaf": 2,
+      "criterion": "log_loss",
+      "class_weight": "balanced",
+      "max_samples": 0.5540471802908978,
+      "max_features": "sqrt"
+    },
+    "n_trials": 50
+  },
+  "test_metrics": [
+    {
+      "model": "Literature only (Diamond-Forrester)",
+      "roc_auc": 0.3994,
+      "accuracy": 0.4185,
+      "sensitivity": 0.0882,
+      "specificity": 0.8293,
+      "ppv": 0.3913,
+      "npv": 0.4224,
+      "brier": 0.459,
+      "log_loss": 1.4272,
+      "auc_ci_low": 0.3126,
+      "auc_ci_high": 0.4859,
+      "ece": 0.4489
+    },
+    {
+      "model": "M0 Bayesian (weak priors)",
+      "roc_auc": 0.895,
+      "accuracy": 0.837,
+      "sensitivity": 0.8922,
+      "specificity": 0.7683,
+      "ppv": 0.8273,
+      "npv": 0.8514,
+      "brier": 0.1241,
+      "log_loss": 0.4051,
+      "auc_ci_low": 0.8443,
+      "auc_ci_high": 0.9394,
+      "ece": 0.0367
+    },
+    {
+      "model": "M1 Bayesian (literature priors)",
+      "roc_auc": 0.8759,
+      "accuracy": 0.8098,
+      "sensitivity": 0.8431,
+      "specificity": 0.7683,
+      "ppv": 0.819,
+      "npv": 0.7975,
+      "brier": 0.1386,
+      "log_loss": 0.4456,
+      "auc_ci_low": 0.8198,
+      "auc_ci_high": 0.9253,
+      "ece": 0.0466
+    },
+    {
+      "model": "M2 Bayesian (refined)",
+      "roc_auc": 0.8995,
+      "accuracy": 0.8424,
+      "sensitivity": 0.8922,
+      "specificity": 0.7805,
+      "ppv": 0.8349,
+      "npv": 0.8533,
+      "brier": 0.1201,
+      "log_loss": 0.3968,
+      "auc_ci_low": 0.8487,
+      "auc_ci_high": 0.9434,
+      "ece": 0.0619
+    },
+    {
+      "model": "Random Forest (default)",
+      "roc_auc": 0.8801,
+      "accuracy": 0.8424,
+      "sensitivity": 0.8824,
+      "specificity": 0.7927,
+      "ppv": 0.8411,
+      "npv": 0.8442,
+      "brier": 0.1311,
+      "log_loss": 0.4316,
+      "auc_ci_low": 0.824,
+      "auc_ci_high": 0.9315,
+      "ece": 0.0806
+    },
+    {
+      "model": "Random Forest (Bayesian-optimised)",
+      "roc_auc": 0.89,
+      "accuracy": 0.837,
+      "sensitivity": 0.8922,
+      "specificity": 0.7683,
+      "ppv": 0.8273,
+      "npv": 0.8514,
+      "brier": 0.1296,
+      "log_loss": 0.4212,
+      "auc_ci_low": 0.8361,
+      "auc_ci_high": 0.9373,
+      "ece": 0.0849
+    }
+  ],
+  "patient_examples": [
+    {
+      "site": "Hungary",
+      "age": 38.0,
+      "sex": "M",
+      "chest_pain": "Non-anginal",
+      "pretest_prob": 0.052,
+      "posttest_prob": 0.121,
+      "94%_low": 0.06,
+      "94%_high": 0.206,
+      "actual_diagnosis": "No CAD"
+    },
+    {
+      "site": "Hungary",
+      "age": 51.0,
+      "sex": "F",
+      "chest_pain": "Non-anginal",
+      "pretest_prob": 0.084,
+      "posttest_prob": 0.374,
+      "94%_low": 0.192,
+      "94%_high": 0.582,
+      "actual_diagnosis": "No CAD"
+    },
+    {
+      "site": "Hungary",
+      "age": 53.0,
+      "sex": "M",
+      "chest_pain": "Atypical angina",
+      "pretest_prob": 0.589,
+      "posttest_prob": 0.087,
+      "94%_low": 0.029,
+      "94%_high": 0.188,
+      "actual_diagnosis": "No CAD"
+    },
+    {
+      "site": "Hungary",
+      "age": 66.0,
+      "sex": "M",
+      "chest_pain": "Asymptomatic",
+      "pretest_prob": 0.123,
+      "posttest_prob": 0.918,
+      "94%_low": 0.821,
+      "94%_high": 0.972,
+      "actual_diagnosis": "CAD"
+    },
+    {
+      "site": "VA Long Beach",
+      "age": 69.0,
+      "sex": "M",
+      "chest_pain": "Asymptomatic",
+      "pretest_prob": 0.123,
+      "posttest_prob": 0.865,
+      "94%_low": 0.728,
+      "94%_high": 0.948,
+      "actual_diagnosis": "CAD"
+    },
+    {
+      "site": "Switzerland",
+      "age": 60.0,
+      "sex": "M",
+      "chest_pain": "Asymptomatic",
+      "pretest_prob": 0.123,
+      "posttest_prob": 0.983,
+      "94%_low": 0.938,
+      "94%_high": 0.998,
+      "actual_diagnosis": "CAD"
+    }
+  ],
+  "loho": [
+    {
+      "held_out": "Cleveland",
+      "model": "Literature only",
+      "prevalence": 0.4587,
+      "roc_auc": 0.3967,
+      "accuracy": 0.4818,
+      "sensitivity": 0.0935,
+      "specificity": 0.811,
+      "ppv": 0.2955,
+      "npv": 0.5135,
+      "brier": 0.4092,
+      "log_loss": 1.2407
+    },
+    {
+      "held_out": "Cleveland",
+      "model": "M1 Bayesian",
+      "prevalence": 0.4587,
+      "roc_auc": 0.8803,
+      "accuracy": 0.8086,
+      "sensitivity": 0.8273,
+      "specificity": 0.7927,
+      "ppv": 0.7718,
+      "npv": 0.8442,
+      "brier": 0.143,
+      "log_loss": 0.4426
+    },
+    {
+      "held_out": "Cleveland",
+      "model": "M2 Bayesian",
+      "prevalence": 0.4587,
+      "roc_auc": 0.8739,
+      "accuracy": 0.7657,
+      "sensitivity": 0.8705,
+      "specificity": 0.6768,
+      "ppv": 0.6954,
+      "npv": 0.8605,
+      "brier": 0.1587,
+      "log_loss": 0.4827
+    },
+    {
+      "held_out": "Cleveland",
+      "model": "RF (BO-tuned)",
+      "prevalence": 0.4587,
+      "roc_auc": 0.8779,
+      "accuracy": 0.7657,
+      "sensitivity": 0.9209,
+      "specificity": 0.6341,
+      "ppv": 0.6809,
+      "npv": 0.9043,
+      "brier": 0.1687,
+      "log_loss": 0.5125
+    },
+    {
+      "held_out": "Hungary",
+      "model": "Literature only",
+      "prevalence": 0.3605,
+      "roc_auc": 0.3218,
+      "accuracy": 0.5646,
+      "sensitivity": 0.066,
+      "specificity": 0.8457,
+      "ppv": 0.1944,
+      "npv": 0.6163,
+      "brier": 0.3493,
+      "log_loss": 1.1255
+    },
+    {
+      "held_out": "Hungary",
+      "model": "M1 Bayesian",
+      "prevalence": 0.3605,
+      "roc_auc": 0.8556,
+      "accuracy": 0.7449,
+      "sensitivity": 0.8774,
+      "specificity": 0.6702,
+      "ppv": 0.6,
+      "npv": 0.9065,
+      "brier": 0.1867,
+      "log_loss": 0.5547
+    },
+    {
+      "held_out": "Hungary",
+      "model": "M2 Bayesian",
+      "prevalence": 0.3605,
+      "roc_auc": 0.9065,
+      "accuracy": 0.7857,
+      "sensitivity": 0.9245,
+      "specificity": 0.7074,
+      "ppv": 0.6405,
+      "npv": 0.9433,
+      "brier": 0.1664,
+      "log_loss": 0.5096
+    },
+    {
+      "held_out": "Hungary",
+      "model": "RF (BO-tuned)",
+      "prevalence": 0.3605,
+      "roc_auc": 0.8762,
+      "accuracy": 0.8095,
+      "sensitivity": 0.8208,
+      "specificity": 0.8032,
+      "ppv": 0.7016,
+      "npv": 0.8882,
+      "brier": 0.1571,
+      "log_loss": 0.4896
+    },
+    {
+      "held_out": "Switzerland",
+      "model": "Literature only",
+      "prevalence": 0.935,
+      "roc_auc": 0.2788,
+      "accuracy": 0.0976,
+      "sensitivity": 0.0522,
+      "specificity": 0.75,
+      "ppv": 0.75,
+      "npv": 0.0522,
+      "brier": 0.7216,
+      "log_loss": 2.1741
+    },
+    {
+      "held_out": "Switzerland",
+      "model": "M1 Bayesian",
+      "prevalence": 0.935,
+      "roc_auc": 0.6946,
+      "accuracy": 0.6748,
+      "sensitivity": 0.6783,
+      "specificity": 0.625,
+      "ppv": 0.963,
+      "npv": 0.119,
+      "brier": 0.2025,
+      "log_loss": 0.5838
+    },
+    {
+      "held_out": "Switzerland",
+      "model": "M2 Bayesian",
+      "prevalence": 0.935,
+      "roc_auc": 0.7359,
+      "accuracy": 0.7967,
+      "sensitivity": 0.8174,
+      "specificity": 0.5,
+      "ppv": 0.9592,
+      "npv": 0.16,
+      "brier": 0.1485,
+      "log_loss": 0.4567
+    },
+    {
+      "held_out": "Switzerland",
+      "model": "RF (BO-tuned)",
+      "prevalence": 0.935,
+      "roc_auc": 0.7543,
+      "accuracy": 0.7805,
+      "sensitivity": 0.7913,
+      "specificity": 0.625,
+      "ppv": 0.9681,
+      "npv": 0.1724,
+      "brier": 0.1583,
+      "log_loss": 0.4857
+    },
+    {
+      "held_out": "VA Long Beach",
+      "model": "Literature only",
+      "prevalence": 0.745,
+      "roc_auc": 0.4291,
+      "accuracy": 0.245,
+      "sensitivity": 0.0671,
+      "specificity": 0.7647,
+      "ppv": 0.4545,
+      "npv": 0.2191,
+      "brier": 0.5594,
+      "log_loss": 1.5786
+    },
+    {
+      "held_out": "VA Long Beach",
+      "model": "M1 Bayesian",
+      "prevalence": 0.745,
+      "roc_auc": 0.6998,
+      "accuracy": 0.64,
+      "sensitivity": 0.6174,
+      "specificity": 0.7059,
+      "ppv": 0.8598,
+      "npv": 0.3871,
+      "brier": 0.2253,
+      "log_loss": 0.6444
+    },
+    {
+      "held_out": "VA Long Beach",
+      "model": "M2 Bayesian",
+      "prevalence": 0.745,
+      "roc_auc": 0.7273,
+      "accuracy": 0.74,
+      "sensitivity": 0.8725,
+      "specificity": 0.3529,
+      "ppv": 0.7975,
+      "npv": 0.4865,
+      "brier": 0.1683,
+      "log_loss": 0.5114
+    },
+    {
+      "held_out": "VA Long Beach",
+      "model": "RF (BO-tuned)",
+      "prevalence": 0.745,
+      "roc_auc": 0.7256,
+      "accuracy": 0.695,
+      "sensitivity": 0.7047,
+      "specificity": 0.6667,
+      "ppv": 0.8607,
+      "npv": 0.4359,
+      "brier": 0.1926,
+      "log_loss": 0.5694
+    }
+  ],
+  "sequential_updating": [
+    {
+      "update": 0,
+      "patients_seen": 0,
+      "test_auc": 0.6795,
+      "test_log_loss": 0.7181,
+      "mean_posterior_sd": 0.7174
+    },
+    {
+      "update": 1,
+      "patients_seen": 184,
+      "test_auc": 0.862,
+      "test_log_loss": 0.4722,
+      "mean_posterior_sd": 0.5066
+    },
+    {
+      "update": 2,
+      "patients_seen": 368,
+      "test_auc": 0.8734,
+      "test_log_loss": 0.4434,
+      "mean_posterior_sd": 0.4367
+    },
+    {
+      "update": 3,
+      "patients_seen": 552,
+      "test_auc": 0.8763,
+      "test_log_loss": 0.4428,
+      "mean_posterior_sd": 0.4042
+    },
+    {
+      "update": 4,
+      "patients_seen": 736,
+      "test_auc": 0.8759,
+      "test_log_loss": 0.4459,
+      "mean_posterior_sd": 0.3808
+    }
+  ],
+  "sequential_vs_full": {
+    "max_abs_coef_mean_diff": 0.16991717607621626,
+    "max_abs_test_prob_diff": 0.01854787566251337,
+    "corr_test_prob": 0.9998349915692613
+  }
+}

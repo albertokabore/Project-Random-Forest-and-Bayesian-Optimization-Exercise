@@ -1,0 +1,162 @@
+{
+  "review_date": "2026-11-18",
+  "author": "Albert Kabore",
+  "checks": [
+    {
+      "check": "Raw data provenance and numerical evidence",
+      "status": "passed",
+      "detail": "All five raw-file hashes match the previous official-archive verification; saved numeric evidence files are unchanged."
+    },
+    {
+      "check": "Counts, split and prevalence updating",
+      "status": "passed",
+      "detail": "920 records; 509 positive diagnoses; split 736/184; 102 positive test records; four Beta updates reproduced."
+    },
+    {
+      "check": "Original main metrics and all six AUC intervals",
+      "status": "passed",
+      "detail": "All point metrics, binned calibration errors and 2,000-resample AUC intervals recomputed from saved individual predictions."
+    },
+    {
+      "check": "Corrected main, hospital and pooled results",
+      "status": "passed",
+      "detail": "All stored corrected point metrics recomputed from individual predictions; four outer folds each used 50 RF trials."
+    },
+    {
+      "check": "Paired comparison interpretation",
+      "status": "passed",
+      "detail": "Both reported paired AUC intervals reproduced and include zero; equivalence and prior-only benefit are not claimed."
+    },
+    {
+      "check": "All earlier notebook and writing requests",
+      "status": "passed",
+      "detail": "Albert Kabore, PhD student in Artificial Intelligence; introduction; six 50-word observation blocks; final insights; recommendations; conclusion last; pictured paragraph removed; all nine saved figures have Markdown subtitles."
+    },
+    {
+      "check": "Notebook integrity",
+      "status": "passed",
+      "detail": "All 20 original code cells and their saved outputs retained; no saved exception outputs; notebook schema valid."
+    },
+    {
+      "check": "Word document, formatting and watermark objects",
+      "status": "passed",
+      "detail": "The academic edition has valid Word ZIP/XML structure, black text, white table cells, black borders, seven tables, four figures, six 50-word observation blocks and the conclusion last. No watermark objects or placeholders are present. The earlier named Word file could not be replaced; the academic edition is saved separately."
+    },
+    {
+      "check": "Rounding corrections",
+      "status": "passed",
+      "detail": "Literature-only accuracy is 77/184 = 41.8%; M1 NPV is 63/79 = 79.7%; percentages now formatted from full-precision results."
+    },
+    {
+      "check": "Report rebuild dependencies",
+      "status": "passed",
+      "detail": "python-docx added to requirements and optional reporting dependencies; Python source parses."
+    },
+    {
+      "check": "Automated model checks",
+      "status": "passed",
+      "detail": "Full pytest run in this review: 28 passed in 54.26 seconds, including Bayesian fitting/updating and unseen-hospital effect checks."
+    },
+    {
+      "check": "Published prior table and dataset definitions",
+      "status": "passed",
+      "detail": "All 32 table entries match the published Attia appendix reproduction; UCI confirms the 13-predictor, angiographic target definitions. The original 1979 full paper was not independently accessed."
+    },
+    {
+      "check": "Academic presentation update",
+      "status": "passed",
+      "detail": "Formal impersonal prose; academic field written in full; black Word text and white tables; black-on-white notebook HTML; all original numerical evidence and 20 code cells with saved outputs preserved."
+    }
+  ],
+  "original_auc_intervals_recomputed": [
+    {
+      "model": "Literature only (Diamond-Forrester)",
+      "auc_ci_low": 0.312648113926924,
+      "auc_ci_high": 0.4858729078391267
+    },
+    {
+      "model": "M0 Bayesian (weak priors)",
+      "auc_ci_low": 0.8443222389586473,
+      "auc_ci_high": 0.9393696705426355
+    },
+    {
+      "model": "M1 Bayesian (literature priors)",
+      "auc_ci_low": 0.8197582748622586,
+      "auc_ci_high": 0.9253300547949065
+    },
+    {
+      "model": "M2 Bayesian (refined)",
+      "auc_ci_low": 0.8487400684028453,
+      "auc_ci_high": 0.9433690969952438
+    },
+    {
+      "model": "Random Forest (default)",
+      "auc_ci_low": 0.8239833155398621,
+      "auc_ci_high": 0.9314695017674114
+    },
+    {
+      "model": "Random Forest (Bayesian-optimised)",
+      "auc_ci_low": 0.8361259655377302,
+      "auc_ci_high": 0.9373174202556718
+    }
+  ],
+  "scope_limits": [
+    "One binary CAD outcome and limited clinical histories; not a multi-disease diagnostic system.",
+    "A measurable benefit from medical priors is not established; the companion comparison also changes predictors and shrinkage.",
+    "Detailed grading rubric not supplied; exact rubric compliance cannot be certified.",
+    "Saved predictions and bootstrap intervals were recomputed; the full RF searches and all full-budget MCMC fits were not repeated in this final review."
+  ],
+  "artifacts": {
+    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx": "a064a2f1c0dc6e3e0cb2b239e5ed39420c69e692ef5038fa945fbabb9aee299f",
+    "reports/REPORT.md": "25e0776d645afe5f507a771f03aba4fccef5293fd64c75313678b93e078be29c",
+    "notebooks/medical_diagnosis_system.ipynb": "621a7e1732d1569de4fc74489079ceaf068766a087052f6e9f6e4277bbbd015a",
+    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "33ce2469613dfb4d1315f7d3228c34495a746722c4064043cf52faa708c97421"
+  },
+  "sources": [
+    {
+      "title": "UCI Heart Disease",
+      "url": "https://archive.ics.uci.edu/dataset/45/heart%2Bdisease"
+    },
+    {
+      "title": "Attia et al. published article and reproduced prior table",
+      "url": "https://www.mja.com.au/journal/2004/180/9/generating-pre-test-probabilities-neglected-area-clinical-decision-making"
+    },
+    {
+      "title": "PyMC official rename and model API announcement",
+      "url": "https://www.pymc.io/blog/v4_announcement.html"
+    }
+  ],
+  "qualification": "PhD student in Artificial Intelligence",
+  "presentation_update": {
+    "author": "Albert Kabore",
+    "qualification": "PhD student in Artificial Intelligence",
+    "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx",
+    "word_colours": [
+      "000000"
+    ],
+    "table_fills": [
+      "FFFFFF"
+    ],
+    "watermark_objects": 0,
+    "word_tables": 7,
+    "word_figures": 4,
+    "notebook_figures": 9,
+    "observation_words_per_step": {
+      "1": 50,
+      "2": 50,
+      "3": 50,
+      "4": 50,
+      "5": 50,
+      "6": 50
+    },
+    "original_code_and_outputs_preserved": true,
+    "numerical_evidence_unchanged": true,
+    "html_reading_view": "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html",
+    "artifacts": {
+      "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx": "a064a2f1c0dc6e3e0cb2b239e5ed39420c69e692ef5038fa945fbabb9aee299f",
+      "reports/REPORT.md": "25e0776d645afe5f507a771f03aba4fccef5293fd64c75313678b93e078be29c",
+      "notebooks/medical_diagnosis_system.ipynb": "621a7e1732d1569de4fc74489079ceaf068766a087052f6e9f6e4277bbbd015a",
+      "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "33ce2469613dfb4d1315f7d3228c34495a746722c4064043cf52faa708c97421"
+    }
+  }
+}

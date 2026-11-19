@@ -1,0 +1,14 @@
+{
+  "edition": "Author revision with original and completed corrected analyses",
+  "author": "Albert Kabore",
+  "academic_status": "PhD student in Artificial Intelligence",
+  "date": "2026-11-18",
+  "document": "Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx",
+  "source_sha256": "25e0776d645afe5f507a771f03aba4fccef5293fd64c75313678b93e078be29c",
+  "verification_sha256": "1318ce54c70bf4ec9072eb3d1fad58de3b6f0ad0a5c653be04af09d8dead43b6",
+  "corrected_results_sha256": "afb36b0e68a7a0bcba77b9241252364e0241ce5755f042650acdaf81f3430e74",
+  "tables": 7,
+  "figures": 4,
+  "text_colour": "000000",
+  "table_fill": "FFFFFF"
+}

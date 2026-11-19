@@ -1,0 +1,572 @@
+{
+  "main": {
+    "metrics": {
+      "M0_weak": {
+        "roc_auc": 0.8947871831659493,
+        "accuracy": 0.8369565217391305,
+        "sensitivity": 0.8921568627450981,
+        "specificity": 0.7682926829268293,
+        "ppv": 0.8272727272727273,
+        "npv": 0.8513513513513513,
+        "brier": 0.12398623942397444,
+        "log_loss": 0.40497894036174387,
+        "ece": 0.03666332830945558
+      },
+      "M1_literature": {
+        "roc_auc": 0.8755380200860833,
+        "accuracy": 0.8097826086956522,
+        "sensitivity": 0.8431372549019608,
+        "specificity": 0.7682926829268293,
+        "ppv": 0.819047619047619,
+        "npv": 0.7974683544303798,
+        "brier": 0.13858123679082343,
+        "log_loss": 0.4456225126826588,
+        "ece": 0.04658453220942532
+      },
+      "M2_refined": {
+        "roc_auc": 0.8996891439502629,
+        "accuracy": 0.842391304347826,
+        "sensitivity": 0.8921568627450981,
+        "specificity": 0.7804878048780488,
+        "ppv": 0.8348623853211009,
+        "npv": 0.8533333333333334,
+        "brier": 0.12014761675359234,
+        "log_loss": 0.39679485599915515,
+        "ece": 0.062033313569814924
+      },
+      "M2_weak_ablation": {
+        "roc_auc": 0.8993304638928742,
+        "accuracy": 0.8315217391304348,
+        "sensitivity": 0.8725490196078431,
+        "specificity": 0.7804878048780488,
+        "ppv": 0.8317757009345794,
+        "npv": 0.8311688311688312,
+        "brier": 0.12165752219703499,
+        "log_loss": 0.4005427006084774,
+        "ece": 0.04840648265527661
+      },
+      "RF_default": {
+        "roc_auc": 0.8800813008130082,
+        "accuracy": 0.842391304347826,
+        "sensitivity": 0.8823529411764706,
+        "specificity": 0.7926829268292683,
+        "ppv": 0.8411214953271028,
+        "npv": 0.8441558441558441,
+        "brier": 0.1311342391304674,
+        "log_loss": 0.4315591410770256,
+        "ece": 0.08059782608695656
+      },
+      "RF_tuned": {
+        "roc_auc": 0.8900047824007651,
+        "accuracy": 0.8369565217391305,
+        "sensitivity": 0.8921568627450981,
+        "specificity": 0.7682926829268293,
+        "ppv": 0.8272727272727273,
+        "npv": 0.8513513513513513,
+        "brier": 0.12962562849797454,
+        "log_loss": 0.4211984221720106,
+        "ece": 0.08494134659431353
+      }
+    },
+    "diagnostics": {
+      "M0_weak": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1950.0,
+        "divergences": 0,
+        "target_accept": 0.95
+      },
+      "M1_literature": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 3422.0,
+        "divergences": 0,
+        "target_accept": 0.95
+      },
+      "M2_refined": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 2102.0,
+        "divergences": 0,
+        "target_accept": 0.95
+      },
+      "M2_weak_ablation": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 2891.0,
+        "divergences": 0,
+        "target_accept": 0.95
+      }
+    },
+    "pareto_k_max": {
+      "M0_weak": 0.3944731856736715,
+      "M1_literature": 0.34103810293457915,
+      "M2_refined": 0.38952382700017135,
+      "M2_weak_ablation": 0.4230638250034781
+    },
+    "paired_bootstrap": {
+      "M2_minus_M0": {
+        "auc_diff": 0.004901960784313597,
+        "auc_diff_95ci": [
+          -0.007211689463019183,
+          0.016660673618602354
+        ],
+        "logloss_diff": -0.008184084362588717,
+        "logloss_diff_95ci": [
+          -0.02926853949780503,
+          0.014324256456598291
+        ],
+        "n_boot": 2000
+      },
+      "M2_minus_M2weak_ablation": {
+        "auc_diff": 0.000358680057388705,
+        "auc_diff_95ci": [
+          -0.010321626125884165,
+          0.009699180058474265
+        ],
+        "logloss_diff": -0.0037478446093222595,
+        "logloss_diff_95ci": [
+          -0.021584325676400413,
+          0.014415529374776541
+        ],
+        "n_boot": 2000
+      },
+      "M1_minus_M0": {
+        "auc_diff": -0.019249163079866016,
+        "auc_diff_95ci": [
+          -0.041949764213361794,
+          0.0033229025732580807
+        ],
+        "logloss_diff": 0.04064357232091492,
+        "logloss_diff_95ci": [
+          -0.0020077541138267983,
+          0.07918342451451814
+        ],
+        "n_boot": 2000
+      },
+      "RFtuned_minus_RFdefault": {
+        "auc_diff": 0.00992348158775691,
+        "auc_diff_95ci": [
+          -0.004704087483617306,
+          0.02625842096956401
+        ],
+        "logloss_diff": -0.010360718905014998,
+        "logloss_diff_95ci": [
+          -0.038327669897099195,
+          0.013867458728657958
+        ],
+        "n_boot": 2000
+      },
+      "M2_minus_RFtuned": {
+        "auc_diff": 0.00968436154949781,
+        "auc_diff_95ci": [
+          -0.018315250150693123,
+          0.0368261160592672
+        ],
+        "logloss_diff": -0.02440356617285544,
+        "logloss_diff_95ci": [
+          -0.06892932858933838,
+          0.031181435298157718
+        ],
+        "n_boot": 2000
+      }
+    },
+    "loo": [
+      {
+        "model": "M2_weak_ablation",
+        "rank": 0,
+        "elpd_loo": -284.8843751974589,
+        "p_loo": 26.91259990122211,
+        "elpd_diff": 0.0,
+        "dse": 0.0,
+        "weight": 0.7614452808454261
+      },
+      {
+        "model": "M2_refined",
+        "rank": 1,
+        "elpd_loo": -287.9625989205607,
+        "p_loo": 23.7359479531126,
+        "elpd_diff": 3.078223723101898,
+        "dse": 3.026320795666365,
+        "weight": 0.13619532277429058
+      },
+      {
+        "model": "M0_weak",
+        "rank": 2,
+        "elpd_loo": -289.35709820384284,
+        "p_loo": 24.14905943905393,
+        "elpd_diff": 4.472723006383955,
+        "dse": 3.4016967581650817,
+        "weight": 0.09008143250097969
+      },
+      {
+        "model": "M1_literature",
+        "rank": 3,
+        "elpd_loo": -318.0714631791752,
+        "p_loo": 19.001715127252453,
+        "elpd_diff": 33.187087981716374,
+        "dse": 8.141665057533475,
+        "weight": 0.012277963879303513
+      }
+    ]
+  },
+  "loho_summary": {
+    "pooled_out_of_hospital": {
+      "Literature only": {
+        "roc_auc": 0.3760295221296469,
+        "accuracy": 0.40543478260869564,
+        "sensitivity": 0.07072691552062868,
+        "specificity": 0.8199513381995134,
+        "ppv": 0.32727272727272727,
+        "npv": 0.4160493827160494,
+        "brier": 0.4644628032608696,
+        "log_loss": 1.4021139145604125
+      },
+      "M1 Bayesian": {
+        "roc_auc": 0.7935171774243663,
+        "accuracy": 0.7326086956521739,
+        "sensitivity": 0.7426326129666012,
+        "specificity": 0.7201946472019465,
+        "ppv": 0.7667342799188641,
+        "npv": 0.6932084309133489,
+        "brier": 0.18222469923544468,
+        "log_loss": 0.5395918486937511
+      },
+      "M2 Bayesian": {
+        "roc_auc": 0.8508597077423888,
+        "accuracy": 0.7739130434782608,
+        "sensitivity": 0.8703339882121808,
+        "specificity": 0.6545012165450121,
+        "ppv": 0.7572649572649572,
+        "npv": 0.8029850746268656,
+        "brier": 0.16111486285851295,
+        "log_loss": 0.49218690782517377
+      },
+      "RF (nested BO)": {
+        "roc_auc": 0.8125612455126459,
+        "accuracy": 0.741304347826087,
+        "sensitivity": 0.8055009823182712,
+        "specificity": 0.6618004866180048,
+        "ppv": 0.7468123861566485,
+        "npv": 0.7331536388140162,
+        "brier": 0.1773909185358554,
+        "log_loss": 0.5330534367994385
+      }
+    },
+    "patient_weighted_brier": {
+      "Literature only": 0.4644628032608696,
+      "M1 Bayesian": 0.1822246992354447,
+      "M2 Bayesian": 0.16111486285851298,
+      "RF (nested BO)": 0.1773909185358554
+    },
+    "mean_auc_over_hospitals": {
+      "Literature only": 0.3566038957173295,
+      "M1 Bayesian": 0.7836991589630531,
+      "M2 Bayesian": 0.8120402936328863,
+      "RF (nested BO)": 0.8074601038169802
+    }
+  },
+  "loho": {
+    "Cleveland": {
+      "n": 303,
+      "prevalence": 0.45874587458745875,
+      "metrics": {
+        "Literature only": {
+          "roc_auc": 0.3966924021758203,
+          "accuracy": 0.48184818481848185,
+          "sensitivity": 0.09352517985611511,
+          "specificity": 0.8109756097560976,
+          "ppv": 0.29545454545454547,
+          "npv": 0.5135135135135135,
+          "brier": 0.4091555247524752,
+          "log_loss": 1.2406654422077865,
+          "ece": 0.3783300330033004
+        },
+        "RF (nested BO)": {
+          "roc_auc": 0.8768204948236532,
+          "accuracy": 0.7227722772277227,
+          "sensitivity": 0.9280575539568345,
+          "specificity": 0.5487804878048781,
+          "ppv": 0.6354679802955665,
+          "npv": 0.9,
+          "brier": 0.18183649390649684,
+          "log_loss": 0.5385057341931436,
+          "ece": 0.1786526486768925
+        },
+        "M1 Bayesian": {
+          "roc_auc": 0.8816459027899631,
+          "accuracy": 0.8052805280528053,
+          "sensitivity": 0.8273381294964028,
+          "specificity": 0.7865853658536586,
+          "ppv": 0.7666666666666667,
+          "npv": 0.8431372549019608,
+          "brier": 0.1420897935537682,
+          "log_loss": 0.44000095979021686,
+          "ece": 0.10417648180482586
+        },
+        "M2 Bayesian": {
+          "roc_auc": 0.8746271275662397,
+          "accuracy": 0.768976897689769,
+          "sensitivity": 0.8705035971223022,
+          "specificity": 0.6829268292682927,
+          "ppv": 0.6994219653179191,
+          "npv": 0.8615384615384616,
+          "brier": 0.15845785038345006,
+          "log_loss": 0.48201240312432597,
+          "ece": 0.1138782858435074
+        }
+      },
+      "diagnostics": {
+        "M1 Bayesian": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 3570.0,
+          "divergences": 0,
+          "target_accept": 0.95
+        },
+        "M2 Bayesian": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 2341.0,
+          "divergences": 0,
+          "target_accept": 0.95
+        }
+      },
+      "rf_best_params": {
+        "n_estimators": 300,
+        "max_depth": 8,
+        "min_samples_split": 7,
+        "min_samples_leaf": 3,
+        "criterion": "entropy",
+        "class_weight": null,
+        "max_samples": 0.7406596272569266,
+        "max_features": "sqrt"
+      },
+      "rf_best_inner_cv_log_loss": 0.40836397331626734,
+      "rf_trials": 50
+    },
+    "Hungary": {
+      "n": 294,
+      "prevalence": 0.36054421768707484,
+      "metrics": {
+        "Literature only": {
+          "roc_auc": 0.3217834203131272,
+          "accuracy": 0.564625850340136,
+          "sensitivity": 0.0660377358490566,
+          "specificity": 0.8457446808510638,
+          "ppv": 0.19444444444444445,
+          "npv": 0.6162790697674418,
+          "brier": 0.34929042517006803,
+          "log_loss": 1.1255036524982247,
+          "ece": 0.37104421768707485
+        },
+        "RF (nested BO)": {
+          "roc_auc": 0.8729425933360097,
+          "accuracy": 0.8027210884353742,
+          "sensitivity": 0.8584905660377359,
+          "specificity": 0.7712765957446809,
+          "ppv": 0.6791044776119403,
+          "npv": 0.90625,
+          "brier": 0.1661463665360438,
+          "log_loss": 0.5114121566267449,
+          "ece": 0.15400432486029242
+        },
+        "M1 Bayesian": {
+          "roc_auc": 0.8555299076676033,
+          "accuracy": 0.7448979591836735,
+          "sensitivity": 0.8773584905660378,
+          "specificity": 0.6702127659574468,
+          "ppv": 0.6,
+          "npv": 0.9064748201438849,
+          "brier": 0.18672832819085755,
+          "log_loss": 0.5547132908904926,
+          "ece": 0.20580158116333624
+        },
+        "M2 Bayesian": {
+          "roc_auc": 0.9064130871136089,
+          "accuracy": 0.7925170068027211,
+          "sensitivity": 0.9245283018867925,
+          "specificity": 0.7180851063829787,
+          "ppv": 0.6490066225165563,
+          "npv": 0.9440559440559441,
+          "brier": 0.16428724050754742,
+          "log_loss": 0.5049577735797492,
+          "ece": 0.19951499565739012
+        }
+      },
+      "diagnostics": {
+        "M1 Bayesian": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 3799.0,
+          "divergences": 0,
+          "target_accept": 0.95
+        },
+        "M2 Bayesian": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 2007.0,
+          "divergences": 0,
+          "target_accept": 0.99,
+          "refit_after_divergence": true
+        }
+      },
+      "rf_best_params": {
+        "n_estimators": 550,
+        "max_depth": 16,
+        "min_samples_split": 7,
+        "min_samples_leaf": 1,
+        "criterion": "entropy",
+        "class_weight": null,
+        "max_samples": 0.9898954548597998,
+        "max_features": "sqrt"
+      },
+      "rf_best_inner_cv_log_loss": 0.4074890659824185,
+      "rf_trials": 50
+    },
+    "Switzerland": {
+      "n": 123,
+      "prevalence": 0.9349593495934959,
+      "metrics": {
+        "Literature only": {
+          "roc_auc": 0.278804347826087,
+          "accuracy": 0.0975609756097561,
+          "sensitivity": 0.05217391304347826,
+          "specificity": 0.75,
+          "ppv": 0.75,
+          "npv": 0.05217391304347826,
+          "brier": 0.721638219512195,
+          "log_loss": 2.174095856898493,
+          "ece": 0.785910569105691
+        },
+        "RF (nested BO)": {
+          "roc_auc": 0.7619565217391304,
+          "accuracy": 0.7560975609756098,
+          "sensitivity": 0.7652173913043478,
+          "specificity": 0.625,
+          "ppv": 0.967032967032967,
+          "npv": 0.15625,
+          "brier": 0.1592938591056696,
+          "log_loss": 0.4892276757931303,
+          "ece": 0.30117272251541427
+        },
+        "M1 Bayesian": {
+          "roc_auc": 0.6967391304347825,
+          "accuracy": 0.6747967479674797,
+          "sensitivity": 0.6782608695652174,
+          "specificity": 0.625,
+          "ppv": 0.9629629629629629,
+          "npv": 0.11904761904761904,
+          "brier": 0.20247105082850492,
+          "log_loss": 0.5838938942645701,
+          "ece": 0.319014386976529
+        },
+        "M2 Bayesian": {
+          "roc_auc": 0.7391304347826086,
+          "accuracy": 0.7967479674796748,
+          "sensitivity": 0.8173913043478261,
+          "specificity": 0.5,
+          "ppv": 0.9591836734693877,
+          "npv": 0.16,
+          "brier": 0.14732459588830737,
+          "log_loss": 0.4535455010557739,
+          "ece": 0.2587595253786143
+        }
+      },
+      "diagnostics": {
+        "M1 Bayesian": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 3020.0,
+          "divergences": 0,
+          "target_accept": 0.95
+        },
+        "M2 Bayesian": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 1549.0,
+          "divergences": 0,
+          "target_accept": 0.95
+        }
+      },
+      "rf_best_params": {
+        "n_estimators": 400,
+        "max_depth": 9,
+        "min_samples_split": 2,
+        "min_samples_leaf": 2,
+        "criterion": "gini",
+        "class_weight": "balanced_subsample",
+        "max_samples": 0.809623797861502,
+        "max_features": "sqrt"
+      },
+      "rf_best_inner_cv_log_loss": 0.42560323249411336,
+      "rf_trials": 50
+    },
+    "VA Long Beach": {
+      "n": 200,
+      "prevalence": 0.745,
+      "metrics": {
+        "Literature only": {
+          "roc_auc": 0.42913541255428345,
+          "accuracy": 0.245,
+          "sensitivity": 0.06711409395973154,
+          "specificity": 0.7647058823529411,
+          "ppv": 0.45454545454545453,
+          "npv": 0.21910112359550563,
+          "brier": 0.559393845,
+          "log_loss": 1.578556540868137,
+          "ece": 0.602595
+        },
+        "RF (nested BO)": {
+          "roc_auc": 0.7181208053691276,
+          "accuracy": 0.67,
+          "sensitivity": 0.6845637583892618,
+          "specificity": 0.6274509803921569,
+          "ppv": 0.8429752066115702,
+          "npv": 0.4050632911392405,
+          "brier": 0.1983150548386209,
+          "log_loss": 0.583558731120714,
+          "ece": 0.1715276185822776
+        },
+        "M1 Bayesian": {
+          "roc_auc": 0.7008816949598632,
+          "accuracy": 0.64,
+          "sensitivity": 0.6174496644295302,
+          "specificity": 0.7058823529411765,
+          "ppv": 0.8598130841121495,
+          "npv": 0.3870967741935484,
+          "brier": 0.22395724054899568,
+          "log_loss": 0.6409977673273413,
+          "ece": 0.20800197942285756
+        },
+        "M2 Bayesian": {
+          "roc_auc": 0.7279905250690881,
+          "accuracy": 0.74,
+          "sensitivity": 0.87248322147651,
+          "specificity": 0.35294117647058826,
+          "ppv": 0.7975460122699386,
+          "npv": 0.4864864864864865,
+          "brier": 0.16895785580082914,
+          "log_loss": 0.5125925749509131,
+          "ece": 0.07329369843474887
+        }
+      },
+      "diagnostics": {
+        "M1 Bayesian": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 3484.0,
+          "divergences": 0,
+          "target_accept": 0.95
+        },
+        "M2 Bayesian": {
+          "max_rhat": 1.01,
+          "min_ess_bulk": 2287.0,
+          "divergences": 0,
+          "target_accept": 0.95
+        }
+      },
+      "rf_best_params": {
+        "n_estimators": 100,
+        "max_depth": 11,
+        "min_samples_split": 6,
+        "min_samples_leaf": 1,
+        "criterion": "entropy",
+        "class_weight": "balanced_subsample",
+        "max_samples": 0.9988246969293179,
+        "max_features": 0.20198275144581418
+      },
+      "rf_best_inner_cv_log_loss": 0.3704016981043621,
+      "rf_trials": 50
+    }
+  }
+}

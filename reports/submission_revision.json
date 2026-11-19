@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-18",
+  "author": "Albert Kabore",
+  "academic_status": "PhD student in Artificial Intelligence",
+  "observation_words_by_step": {
+    "1": 50,
+    "2": 50,
+    "3": 50,
+    "4": 50,
+    "5": 50,
+    "6": 50
+  },
+  "notebook_code_cells": 20,
+  "notebook_code_and_outputs_preserved": true,
+  "code_cells_sha256_before": "c180a7444c6586628a11e879d48f76adf195ca5547c9cc81510ff30e663d3513",
+  "code_cells_sha256_after": "c180a7444c6586628a11e879d48f76adf195ca5547c9cc81510ff30e663d3513",
+  "evidence_files_unchanged": {
+    "reports/metrics.json": "090fece025ad4feec65fbf396c3a46a5cc0d4206c0ac2aa9528fb7060a4f9bb4",
+    "reports/review_verification.json": "1318ce54c70bf4ec9072eb3d1fad58de3b6f0ad0a5c653be04af09d8dead43b6",
+    "reports/corrected/corrected_results.json": "afb36b0e68a7a0bcba77b9241252364e0241ce5755f042650acdaf81f3430e74",
+    "reports/corrected/checkpoint.json": "bba694e83b5abeba1737636440ac945b31d63e4fa575ffbd8d2d5e6c66cd4f54",
+    "reports/data_verification.json": "d335e94d79155169a65a85cc5bc10f8af56f605edd11a39d3b48883b872b6a9d"
+  },
+  "report_sha256": "25e0776d645afe5f507a771f03aba4fccef5293fd64c75313678b93e078be29c",
+  "notebook_sha256": "621a7e1732d1569de4fc74489079ceaf068766a087052f6e9f6e4277bbbd015a"
+}

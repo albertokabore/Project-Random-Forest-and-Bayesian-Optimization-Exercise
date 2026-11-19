@@ -1,0 +1,37 @@
+{
+  "source": "https://archive.ics.uci.edu/static/public/45/heart+disease.zip",
+  "review_date": "2026-11-18",
+  "archive_sha256": "b17cd273da9ce1caa4710fce80227ea454d4dbf9fcbc8e6a9121672751563adc",
+  "files": [
+    {
+      "file": "processed.cleveland.data",
+      "exact_match": true,
+      "sha256": "a74b7efa387bc9d108d7d0115d831fe9b414b29ae7124f331b622b4efa0427c8",
+      "rows": 303
+    },
+    {
+      "file": "processed.hungarian.data",
+      "exact_match": true,
+      "sha256": "d1ad108f785768cd3d7e82dc522e6f5a61eea93cccfb3a46ee8076f73fc3d796",
+      "rows": 294
+    },
+    {
+      "file": "processed.switzerland.data",
+      "exact_match": true,
+      "sha256": "834a405ccf5b66ab4056bb77794adc8df0b7125186454c0a1d002d33c6c3b314",
+      "rows": 123
+    },
+    {
+      "file": "processed.va.data",
+      "exact_match": true,
+      "sha256": "e7c93d8d0d2acdadfa4c5e8de768e2191e7f618b952e29623f1f0d5949ff6b8f",
+      "rows": 200
+    },
+    {
+      "file": "heart-disease.names",
+      "exact_match": true,
+      "sha256": "ec7ed5aa4ed8321097808f47b836301c2a0c36f3bb09c40b8b43b622363e6b61",
+      "rows": 245
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "author": "Albert Kabore",
+  "qualification": "PhD student in Artificial Intelligence",
+  "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx",
+  "word_colours": [
+    "000000"
+  ],
+  "table_fills": [
+    "FFFFFF"
+  ],
+  "watermark_objects": 0,
+  "word_tables": 7,
+  "word_figures": 4,
+  "notebook_figures": 9,
+  "observation_words_per_step": {
+    "1": 50,
+    "2": 50,
+    "3": 50,
+    "4": 50,
+    "5": 50,
+    "6": 50
+  },
+  "original_code_and_outputs_preserved": true,
+  "numerical_evidence_unchanged": true,
+  "html_reading_view": "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html",
+  "artifacts": {
+    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx": "a064a2f1c0dc6e3e0cb2b239e5ed39420c69e692ef5038fa945fbabb9aee299f",
+    "reports/REPORT.md": "25e0776d645afe5f507a771f03aba4fccef5293fd64c75313678b93e078be29c",
+    "notebooks/medical_diagnosis_system.ipynb": "621a7e1732d1569de4fc74489079ceaf068766a087052f6e9f6e4277bbbd015a",
+    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "33ce2469613dfb4d1315f7d3228c34495a746722c4064043cf52faa708c97421"
+  }
+}

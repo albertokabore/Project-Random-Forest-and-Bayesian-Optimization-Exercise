@@ -1,0 +1,4 @@
+# Preserve byte-for-byte provenance hashes for source data and analysis artifacts.
+data/raw/** -text
+reports/** -text
+notebooks/** -text
