@@ -15,32 +15,9 @@ ROOT = Path(__file__).resolve().parents[1]
 AUTHOR = "Albert Kabore"
 QUALIFICATION = "PhD student in Artificial Intelligence"
 
-OBSERVATIONS = {
-    1: [
-        "The dataset contains records from four hospital sources, with substantial variation in prevalence and missingness. These differences require consideration during preprocessing, modelling, validation, and interpretation.",
-        "Identical record pairs do not cross the training and testing split. However, absent patient identifiers prevent confirmation of unique individuals or evaluation of patient overlap.",
-    ],
-    2: [
-        "The historical probability table provides external information, but its estimates differ substantially from observed training prevalence. Population differences and symptom definitions therefore require explicit evaluation.",
-        "Prior strengths and coefficient distributions are modelling assumptions rather than additional clinical observations. Their influence requires sensitivity analysis before the resulting estimates support clinical interpretation.",
-    ],
-    3: [
-        "Bayesian inference estimates disease probabilities conditional on model assumptions and evidence. Bayesian optimization selects Random Forest hyperparameters using validation performance; these procedures serve distinct purposes.",
-        "The tuned forest improves discrimination and probability scores relative to the default configuration, while threshold accuracy decreases slightly. Optimization does not improve every evaluation measure.",
-    ],
-    4: [
-        "The refined model has the highest original test AUC, but paired uncertainty intervals include zero. These findings do not establish superiority over alternative fitted models.",
-        "Hospital validation demonstrates heterogeneous performance across sites. Pooled results require interpretation alongside site-specific sensitivity, specificity, prevalence, and sample size, particularly where negative cases are scarce.",
-    ],
-    5: [
-        "Model refinement changes several components simultaneously, including feature representation, shrinkage, and hospital effects. Consequently, the comparisons do not isolate the contribution of prior medical knowledge.",
-        "Sequential inference reduces average coefficient uncertainty across batches. However, performance deteriorates slightly at the final update; additional labelled observations do not guarantee immediate predictive improvement.",
-    ],
-    6: [
-        "Transparent reporting distinguishes empirical results, modelling assumptions, and unresolved limitations. Separate identification of original and corrected analyses supports interpretation, reproducibility, and evaluation of the evidence.",
-        "The findings support further methodological investigation. They do not establish clinical safety, prospective benefit, or exact rubric compliance, because the detailed grading criteria were unavailable.",
-    ],
-}
+from output_analysis import derive_output_analysis
+
+OBSERVATIONS, FINAL_INSIGHTS, RECOMMENDATIONS, OUTPUT_ANALYSIS_TRACE = derive_output_analysis(ROOT)
 
 # Original code-cell positions: captions are presentation only and do not alter
 # the executed code or its saved results. The first cell displays two figures.
@@ -60,17 +37,6 @@ NOTEBOOK_VISUALIZATION_SUBTITLES = {
 INTRODUCTION = """This study evaluates coronary artery disease (CAD) prediction using the UCI Heart Disease datasets. The target is the presence of angiographic disease. The analysis concerns diagnostic classification and does not evaluate future cardiovascular events or multiple disease outcomes.
 
 Random Forest classification with Bayesian hyperparameter optimization is compared with Bayesian logistic regression. The objectives are to assess predictions against recorded diagnoses, evaluate the incorporation of historical probabilities, and examine sequential updating with labelled patient batches. The data originate from a public research archive; no new patient recruitment or hospital data collection was undertaken."""
-
-FINAL_INSIGHTS = """- The original M2 model and default Random Forest each correctly classify 155 of 184 test records. Their discrimination, sensitivity, specificity, and probability scores differ despite equal accuracy.
-- Historical pre-test probabilities differ substantially from observed training prevalence. Selection into an angiography cohort is a plausible contributor, but the available variables do not identify the cause of this discrepancy.
-- Corrected hospital evaluation addresses tuning leakage and the dependence structure of hospital effects. Four historical datasets nevertheless provide limited evidence about prospective clinical performance.
-- Paired confidence intervals include zero. The precision of these comparisons is insufficient to establish model superiority or equivalence."""
-
-RECOMMENDATIONS = """- Retain M0, M2, and the tuned Random Forest as reference models. Base model selection on repeated validation in cohorts that have not influenced development.
-- Conduct sensitivity analyses of prior strength while holding predictor representation and model structure constant to assess the contribution of medical priors.
-- Assess calibration, subgroup errors, and decision thresholds with clinical collaborators. The threshold of 0.5 is an analytical setting rather than a validated clinical rule.
-- Evaluate performance in a contemporary, independently collected cohort and establish predictor availability at the intended point of care.
-- Archive original and corrected analyses separately, update conclusions when additional evidence becomes available, and assess rubric compliance when the detailed grading criteria are supplied."""
 
 CONCLUSION = """Random Forest classification, Bayesian optimization, and Bayesian inference were applied to binary CAD prediction using the UCI Heart Disease datasets. The raw files match the source archive, and the original main results were independently reproduced. Fitted models outperform the historical probability table on this test split, although a clear contribution from medical priors has not been established. Corrected hospital comparisons and approximate sequential updating provide additional evidence of methodological limitations. Independent prospective validation is required before clinical use can be considered."""
 

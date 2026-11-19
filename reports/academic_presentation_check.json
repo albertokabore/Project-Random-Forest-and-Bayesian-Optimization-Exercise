@@ -1,7 +1,7 @@
 {
   "author": "Albert Kabore",
   "qualification": "PhD student in Artificial Intelligence",
-  "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx",
+  "word_report": "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx",
   "word_colours": [
     "000000"
   ],
@@ -23,10 +23,13 @@
   "original_code_and_outputs_preserved": true,
   "numerical_evidence_unchanged": true,
   "html_reading_view": "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html",
+  "output_based_observations": 12,
+  "output_based_insight_bullets": 6,
+  "output_justified_recommendations": 6,
   "artifacts": {
-    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx": "a064a2f1c0dc6e3e0cb2b239e5ed39420c69e692ef5038fa945fbabb9aee299f",
-    "reports/REPORT.md": "25e0776d645afe5f507a771f03aba4fccef5293fd64c75313678b93e078be29c",
-    "notebooks/medical_diagnosis_system.ipynb": "621a7e1732d1569de4fc74489079ceaf068766a087052f6e9f6e4277bbbd015a",
-    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "33ce2469613dfb4d1315f7d3228c34495a746722c4064043cf52faa708c97421"
+    "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx": "ad5c1242e2711728f278b917da4ec279000dad716cb40d2de772aa5fe0e0b961",
+    "reports/REPORT.md": "afa452ef5b00b58ea0ad0681f39a7e761a77ba2a38a51bd862bbbd297d02b37c",
+    "notebooks/medical_diagnosis_system.ipynb": "74ffcd5c36c60962ce911899e16cbcacbd12bc035a9819d448c35dd98163168b",
+    "reports/Albert_Kabore_Medical_Diagnosis_Notebook.html": "91a646ba19cc800fc6e6538379e386a1373b4a4a78d66085f520c6b95536f07c"
   }
 }

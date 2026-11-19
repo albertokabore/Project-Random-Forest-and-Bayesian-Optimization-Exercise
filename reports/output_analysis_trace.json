@@ -1,0 +1,26 @@
+{
+  "source_files": [
+    "reports/metrics.json",
+    "reports/review_verification.json",
+    "reports/corrected/corrected_results.json"
+  ],
+  "derivations": {
+    "hospital_prevalence_gap_percentage_points": 57.4415131906421,
+    "test_always_positive_accuracy": 0.5543478260869565,
+    "asymptomatic_gap_percentage_points_from_displayed_training_outputs": 70.5,
+    "tpe_relative_cv_log_loss_improvement": 0.013936082091833535,
+    "internal_correct_classifications": 155,
+    "corrected_hospital_correct_classifications": 712,
+    "va_negative_records": 51,
+    "va_false_positives": 33,
+    "swiss_negative_records": 8,
+    "sequential_mean_coefficient_sd_relative_reduction": 0.4691943127962085,
+    "final_sequential_log_loss_increase": 0.0030999999999999917
+  },
+  "interpretation_limits": [
+    "Original and corrected fits are identified separately.",
+    "Intervals containing zero do not establish superiority or equivalence.",
+    "Companion comparisons change predictor encoding and shrinkage as well as priors.",
+    "Recommendations propose further analyses; they are not presented as completed experiments."
+  ]
+}

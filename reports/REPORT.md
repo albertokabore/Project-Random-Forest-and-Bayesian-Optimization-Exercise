@@ -32,8 +32,8 @@ The 80/20 split is stratified by hospital and diagnosis: 736 training records an
 
 **Observations**
 
-- The dataset contains records from four hospital sources, with substantial variation in prevalence and missingness. These differences require consideration during preprocessing, modelling, validation, and interpretation.
-- Identical record pairs do not cross the training and testing split. However, absent patient identifiers prevent confirmation of unique individuals or evaluation of patient overlap.
+- Disease prevalence ranges from 36.1% in Hungary to 93.5% in Switzerland. This 57.4 percentage-point difference indicates substantial hospital heterogeneity, limiting interpretation of pooled accuracy alone.
+- The test subset contains 102 positive and 82 negative records. Consequently, predicting every case as positive achieves 55.4% accuracy, establishing a basic comparator for classification.
 
 ## Step 2. Prior knowledge integration
 
@@ -58,8 +58,8 @@ Clinical coefficient priors favour expected directions for selected predictors. 
 
 **Observations**
 
-- The historical probability table provides external information, but its estimates differ substantially from observed training prevalence. Population differences and symptom definitions therefore require explicit evaluation.
-- Prior strengths and coefficient distributions are modelling assumptions rather than additional clinical observations. Their influence requires sensitivity analysis before the resulting estimates support clinical interpretation.
+- Asymptomatic records show 79.2% observed prevalence against an 8.7% literature estimate, a 70.5 percentage-point gap. The historical table therefore substantially underestimates this training subgroup's prevalence.
+- Swiss prevalence updating raises the prior mean from 14.4% to 86.5%, below the test prevalence of 92.0%. This remaining gap motivates evaluating alternative prior strengths.
 
 ## Step 3. Model development
 
@@ -82,8 +82,8 @@ For one Hungarian test record, a 53-year-old man with atypical angina, the liter
 
 **Observations**
 
-- Bayesian inference estimates disease probabilities conditional on model assumptions and evidence. Bayesian optimization selects Random Forest hyperparameters using validation performance; these procedures serve distinct purposes.
-- The tuned forest improves discrimination and probability scores relative to the default configuration, while threshold accuracy decreases slightly. Optimization does not improve every evaluation measure.
+- The literature coefficient falls from prior mean 1.000 to posterior mean 0.379. The asymptomatic deviation reaches 2.634, indicating substantial adjustment beyond the historical probability predictor.
+- TPE reduces the best cross-validation log loss from 0.4228 to 0.4169, approximately 1.4% relative improvement. This supports a modest optimization advantage within this seeded run.
 
 ## Step 4. Validation against recorded diagnoses
 
@@ -122,8 +122,8 @@ The final saved hospital fits have zero divergences, rounded maximum R-hat at mo
 
 **Observations**
 
-- The refined model has the highest original test AUC, but paired uncertainty intervals include zero. These findings do not establish superiority over alternative fitted models.
-- Hospital validation demonstrates heterogeneous performance across sites. Pooled results require interpretation alongside site-specific sensitivity, specificity, prevalence, and sample size, particularly where negative cases are scarce.
+- Corrected M2 achieves 84.2% accuracy: 11 false negatives and 18 false positives. Its 0.0049 AUC advantage over M0 is uncertain; the paired interval includes zero.
+- Pooled hospital accuracy falls to 77.4%, compared with 84.2% internally. VA specificity reaches 35.3%, implying frequent false positives despite an overall pooled AUC of 0.8509.
 
 ## Step 5. Iteration and Bayesian updating
 
@@ -157,8 +157,8 @@ The final update slightly reduces AUC and worsens log loss, while mean coefficie
 
 **Observations**
 
-- Model refinement changes several components simultaneously, including feature representation, shrinkage, and hospital effects. Consequently, the comparisons do not isolate the contribution of prior medical knowledge.
-- Sequential inference reduces average coefficient uncertainty across batches. However, performance deteriorates slightly at the final update; additional labelled observations do not guarantee immediate predictive improvement.
+- Sequential updating reduces mean coefficient SD from 0.7174 to 0.3808. However, final log loss rises from 0.4428 to 0.4459, separating parameter precision from predictive improvement.
+- The companion model reaches AUC 0.8993 versus M2's 0.8997, with a difference interval crossing zero. Because predictor encoding also changes, individual prior contributions remain unresolved.
 
 ## Step 6. Reporting, limitations and reproducibility
 
@@ -184,23 +184,26 @@ Data definitions, historical probabilities, and methodological choices are docum
 
 **Observations**
 
-- Transparent reporting distinguishes empirical results, modelling assumptions, and unresolved limitations. Separate identification of original and corrected analyses supports interpretation, reproducibility, and evaluation of the evidence.
-- The findings support further methodological investigation. They do not establish clinical safety, prospective benefit, or exact rubric compliance, because the detailed grading criteria were unavailable.
+- Original M2 has lower Brier loss: 0.1201 versus M0's 0.1241, but higher binned calibration error, 0.0619 versus 0.0367. Lower loss does not guarantee better calibration.
+- The hospital analysis yields 712 correct classifications among 920 records, below internal accuracy. Reporting 77.4% alongside 84.2% demonstrates the practical performance gap associated with transfer.
 
 ## Final insights
 
-- The original M2 model and default Random Forest each correctly classify 155 of 184 test records. Their discrimination, sensitivity, specificity, and probability scores differ despite equal accuracy.
-- Historical pre-test probabilities differ substantially from observed training prevalence. Selection into an angiography cohort is a plausible contributor, but the available variables do not identify the cause of this discrepancy.
-- Corrected hospital evaluation addresses tuning leakage and the dependence structure of hospital effects. Four historical datasets nevertheless provide limited evidence about prospective clinical performance.
-- Paired confidence intervals include zero. The precision of these comparisons is insufficient to establish model superiority or equivalence.
+- Original M2 and the default forest both classify 155 of 184 records correctly (84.2%), but M2 has higher AUC (0.8995 versus 0.8801) and lower log loss (0.3968 versus 0.4316). Equal accuracy therefore conceals differences in ranking and probability estimation. In the corrected fits, M2 minus M0 AUC is 0.0049 with a 95% interval of -0.0072 to 0.0167; superiority over M0 is not established.
+- TPE improves the best CV log loss by 1.4% relative to random search in the recorded 50-trial comparison. Forest test AUC increases from 0.8801 to 0.8900, while correct classifications decrease from 155 to 154. The optimization improves its probability-based objective without improving every threshold-based outcome.
+- The asymptomatic training subgroup has observed prevalence 79.2% and a historical estimate of 8.7%. Original M1 log loss is 0.4456, compared with 0.4051 for M0. Together, these outputs indicate poor transportability of the unadjusted historical probabilities in this cohort; they do not identify the cause. The corrected companion comparison gives an AUC difference of 0.0004 (95% interval -0.0103 to 0.0097) and also changes predictor encoding and shrinkage, so the individual contribution of priors remains unresolved.
+- M2 accuracy decreases from 84.2% on the internal split to 77.4% over hospital holdouts, a descriptive difference of 6.8 percentage points. At VA Long Beach, specificity 35.3% corresponds to 33 false positives among 51 negative records. The pooled AUC of 0.8509 therefore does not imply adequate specificity at every site, and the difference between validation settings does not isolate a causal hospital effect.
+- M2 has lower original Brier loss than M0 (0.1201 versus 0.1241) but higher binned calibration error (0.0619 versus 0.0367). The model ranking depends on the probability metric; these outputs do not support a claim that M2 is uniformly best calibrated.
+- Sequential updating reduces mean coefficient SD by 46.9%, from 0.7174 to 0.3808. Nevertheless, final AUC decreases from 0.8763 to 0.8759, while log loss increases by 0.0031. Reduced parameter uncertainty is therefore not evidence of improved prediction after every update.
 
 ## Recommendations
 
-- Retain M0, M2, and the tuned Random Forest as reference models. Base model selection on repeated validation in cohorts that have not influenced development.
-- Conduct sensitivity analyses of prior strength while holding predictor representation and model structure constant to assess the contribution of medical priors.
-- Assess calibration, subgroup errors, and decision thresholds with clinical collaborators. The threshold of 0.5 is an analytical setting rather than a validated clinical rule.
-- Evaluate performance in a contemporary, independently collected cohort and establish predictor availability at the intended point of care.
-- Archive original and corrected analyses separately, update conclusions when additional evidence becomes available, and assess rubric compliance when the detailed grading criteria are supplied.
+- Compare M0 and M2 through repeated validation before selecting a final model. The corrected AUC difference of 0.0049 has an interval spanning -0.0072 to 0.0167; the current sample cannot establish which has better discrimination.
+- Evaluate prior strengths within training folds while holding predictor encoding, hospital structure, and shrinkage constant. The 70.5 percentage-point asymptomatic prevalence gap and M1 log loss of 0.4456 motivate reassessment, while the companion model's changed representation prevents attribution of its similar AUC to prior removal alone.
+- Assess hospital-level calibration and threshold trade-offs using separate validation data. VA Long Beach produces 33 false positives among 51 negative cases at threshold 0.5, and Switzerland has only 8 negative records. Additional negative cases and uncertainty intervals are required before selecting site-specific decision thresholds.
+- Evaluate calibration curves, intercepts, slopes, and validation-based recalibration alongside proper probability scores. M2's lower Brier loss (0.1201) and higher binned error (0.0619) relative to M0 (0.1241 and 0.0367) show why a single probability metric is insufficient for model selection.
+- Monitor predictive performance after each labelled-data update. Final sequential log loss increases from 0.4428 to 0.4459 despite a 46.9% overall reduction in mean coefficient SD. Update acceptance criteria should therefore include prospective predictive scores rather than parameter precision alone.
+- Prioritize independent hospital evaluation over additional internal tuning. M2's 155/184 correct internal predictions become 712/920 in the hospital evaluation, and source prevalence ranges from 36.1% to 93.5%. These outputs justify evaluation across different prevalence and missingness patterns before considering clinical use.
 
 ## Conclusion
 

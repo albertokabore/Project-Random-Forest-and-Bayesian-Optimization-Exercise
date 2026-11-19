@@ -322,7 +322,13 @@ def main() -> None:
     doc.save(OUTPUT)
     # Update previous filenames when they are not locked by an open Word window.
     payload = OUTPUT.read_bytes()
-    PERSONALIZED_OUTPUT.write_bytes(payload)
+    actual_output = PERSONALIZED_OUTPUT
+    try:
+        actual_output.write_bytes(payload)
+    except PermissionError:
+        actual_output = ROOT / "reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx"
+        actual_output.write_bytes(payload)
+        print("The earlier academic file could not be replaced; a results-analysis edition was saved.")
     for filename in ("Albert_Kabore_Medical_Diagnosis_System_Report.docx", "Medical_Diagnosis_System_Report.docx"):
         try:
             (ROOT / "reports" / filename).write_bytes(payload)
@@ -333,7 +339,7 @@ def main() -> None:
         "author": AUTHOR,
         "academic_status": QUALIFICATION,
         "date": "2026-11-18",
-        "document": PERSONALIZED_OUTPUT.name,
+        "document": actual_output.name,
         "source_sha256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
         "verification_sha256": hashlib.sha256((ROOT / "reports/review_verification.json").read_bytes()).hexdigest(),
         "corrected_results_sha256": hashlib.sha256((ROOT / "reports/corrected/corrected_results.json").read_bytes()).hexdigest(),
@@ -343,7 +349,7 @@ def main() -> None:
         "table_fill": WHITE,
     }
     OUTPUT.with_suffix(".manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-    print(PERSONALIZED_OUTPUT)
+    print(actual_output)
     print(f"{report.table_number} tables, {report.figure_number} figures")
 
 

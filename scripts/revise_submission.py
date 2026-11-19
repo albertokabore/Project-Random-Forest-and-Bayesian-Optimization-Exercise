@@ -8,7 +8,7 @@ from pathlib import Path
 
 import nbformat
 
-from submission_content import AUTHOR, OBSERVATIONS, QUALIFICATION, ROOT, build_markdown, revise_notebook
+from submission_content import AUTHOR, OBSERVATIONS, OUTPUT_ANALYSIS_TRACE, QUALIFICATION, ROOT, build_markdown, revise_notebook
 
 
 def digest(path: Path) -> str:
@@ -51,6 +51,7 @@ def main() -> None:
         "notebook_sha256": digest(path),
     }
     (ROOT / "reports/submission_revision.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "reports/output_analysis_trace.json").write_text(json.dumps(OUTPUT_ANALYSIS_TRACE, indent=2) + "\n", encoding="utf-8")
     print("Updated REPORT.md and notebook markdown for", AUTHOR)
     print("Six observation blocks: exactly 50 words each. All 20 code cells and saved outputs preserved.")
     print("Original and corrected numerical evidence files unchanged.")

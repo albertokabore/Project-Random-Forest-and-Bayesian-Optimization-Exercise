@@ -16,11 +16,13 @@ see [data verification](reports/data_verification.json). No synthetic records we
 
 **Report:** [reports/REPORT.md](reports/REPORT.md) · **Notebook:** [notebooks/medical_diagnosis_system.ipynb](notebooks/medical_diagnosis_system.ipynb)
 
-**Word report:** [Academic report](reports/Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx).
+**Word report:** [Results analysis report](reports/Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx).
 **Notebook reading view:** [Black text and white tables](reports/Albert_Kabore_Medical_Diagnosis_Notebook.html).
 **Final assignment and presentation audit:** [FINAL_AUDIT.md](reports/FINAL_AUDIT.md).
 The report and notebook include an introduction, six steps with 50-word observation blocks, final insights,
-recommendations, and a conclusion placed last.
+recommendations, and a conclusion placed last. The observations, insights, and recommendations analyse
+specific numerical outputs. Their source files and calculated comparisons are recorded in
+[output_analysis_trace.json](reports/output_analysis_trace.json).
 
 **Scientific review:** [reports/REVIEW.md](reports/REVIEW.md) records the original review. Main test results were
 checked independently. The later corrected hospital analysis is complete in
@@ -47,6 +49,7 @@ scripts/
   build_notebook.py           generates the analysis notebook from readable source
   verify_report.py            independently recomputes evidence; --bayesian refits the main Bayesian models
   submission_content.py       shared report and notebook prose, author details, and 50-word observations
+  output_analysis.py          interpretations and recommendations derived from saved numerical outputs
   revise_submission.py        updates Markdown while preserving notebook code, outputs, and numerical evidence
   export_verified_word_report.py  builds the named Word report from REPORT.md
 notebooks/                    executed end-to-end analysis

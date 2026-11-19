@@ -64,7 +64,7 @@ This final audit recomputed scores and bootstrap intervals from saved prediction
 
 ## Submission files
 
-- [Word report](Albert_Kabore_Medical_Diagnosis_System_Report_Academic.docx)
+- [Word report](Albert_Kabore_Medical_Diagnosis_System_Report_Results_Analysis.docx)
 - [Markdown report](REPORT.md)
 - [Notebook](../notebooks/medical_diagnosis_system.ipynb)
 - [Machine-readable audit results](FINAL_AUDIT.json)
@@ -74,3 +74,7 @@ This final audit recomputed scores and bootstrap intervals from saved prediction
 The current academic edition uses black text for headings, paragraphs, citations, captions, and table entries. All table cells are white, with black borders. The prose uses formal impersonal wording. Six 50-word observation blocks, figure subtitles, source citations, and the final conclusion are retained. Numerical evidence and the original 20 notebook code cells with their saved outputs are unchanged.
 
 The earlier named Word file could not be replaced; the revised academic edition is saved separately. A [black-on-white notebook reading view](Albert_Kabore_Medical_Diagnosis_Notebook.html) is also available.
+
+## Output-based interpretation revision
+
+Each of the 12 observation bullets, six final insight bullets, and six recommendations identifies numerical evidence and its interpretation or proposed analytical response. Comparisons distinguish original and corrected fits. Derived quantities include a 1.4% relative CV log-loss improvement, 712/920 correct hospital predictions, and 33 false positives among 51 negative VA records. These quantities were checked against saved results and predictions. Source files and derivations are recorded in [output_analysis_trace.json](output_analysis_trace.json). All six observation blocks remain 50 words.
